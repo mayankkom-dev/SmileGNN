@@ -5,20 +5,17 @@ import os
 import numpy as np
 import re
 from collections import defaultdict
-
-
-sys.path.append('/home/.../SmileGNN/')  # add the env path
 from sklearn.model_selection import train_test_split, StratifiedKFold
-from SmileGNN.main import train
-from SmileGNN.layers.feature import *
+from main import train
+# from SmileGNN.layers.feature import *
 
-from SmileGNN.config import DRUG_EXAMPLE, RESULT_LOG, PROCESSED_DATA_DIR, LOG_DIR, MODEL_SAVED_DIR, ENTITY2ID_FILE, \
+from config import DRUG_EXAMPLE, RESULT_LOG, PROCESSED_DATA_DIR, LOG_DIR, MODEL_SAVED_DIR, ENTITY2ID_FILE, \
     KG_FILE, \
     EXAMPLE_FILE, DRUG_VOCAB_TEMPLATE, ENTITY_VOCAB_TEMPLATE, \
     RELATION_VOCAB_TEMPLATE, SEPARATOR, THRESHOLD, TRAIN_DATA_TEMPLATE, DEV_DATA_TEMPLATE, DRUG_FEATURE_TEMPLATE, \
     DRUG_SIM_TEMPLATE, \
     TEST_DATA_TEMPLATE, ADJ_ENTITY_TEMPLATE, ADJ_RELATION_TEMPLATE, ModelConfig, NEIGHBOR_SIZE
-from SmileGNN.utils import pickle_dump, format_filename, write_log, pickle_load
+from utils import pickle_dump, format_filename, write_log, pickle_load
 
 
 def read_entity2id_file(file_path: str, drug_vocab: dict, entity_vocab: dict,dataset:str):
@@ -194,7 +191,8 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int):
     print('Logging Info - Saved:', drug_feature_file)
 
     '''
-    #注释部分：第一次运行，还没有np save过，需要跑一遍；后续就不用了
+    # #注释部分：第一次运行，还没有np save过，需要跑一遍；后续就不用了
+    ## Notes: The first time you run it, you haven’t saved np yet, so you need to run it again; you won’t need it later
     adj_entity_file = format_filename(PROCESSED_DATA_DIR, ADJ_ENTITY_TEMPLATE, dataset=dataset)
     adj_relation_file = format_filename(PROCESSED_DATA_DIR, ADJ_RELATION_TEMPLATE, dataset=dataset)
 
@@ -215,21 +213,22 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int):
     np.save(adj_relation_file, adj_relation)
     print('Logging Info - Saved:', adj_entity_file)
     
-    drug_feature = read_feature(os.path.join(os.getcwd()+'/raw_data'+'/pca_smiles_kegg.csv'),entity2id,drug_vocab)
+    drug_feature = read_feature(os.path.join(os.getcwd()+'/raw_data'+'/pca_smiles_kegg.csv'),entity2id,drug_vocab, dataset)
     drug_feature_file = format_filename(PROCESSED_DATA_DIR, DRUG_FEATURE_TEMPLATE, dataset=dataset)
     np.save(drug_feature_file, drug_feature,allow_pickle=True)
     print('Logging Info - Saved:', drug_feature_file)
 
 
-    drug_sim = read_sim(os.path.join(os.getcwd()+'/raw_data'+'/kegg/kegg_sim.csv'),entity2id,drug_vocab)
-    drug_sim_file = format_filename(PROCESSED_DATA_DIR, DRUG_SIM_TEMPLATE, dataset=dataset)
-    #np.save(drug_sim_file, drug_sim,allow_pickle=True)
-    #print('Logging Info - Saved:', drug_sim_file)
+    # drug_sim = read_sim(os.path.join(os.getcwd()+'/raw_data'+'/kegg/kegg_sim.csv'),entity2id,drug_vocab)
+    # drug_sim_file = format_filename(PROCESSED_DATA_DIR, DRUG_SIM_TEMPLATE, dataset=dataset)
+    # np.save(drug_sim_file, drug_sim,allow_pickle=True)
+    # print('Logging Info - Saved:', drug_sim_file)
+    # #####
 
-
-    adj = drug_sim
-    adj = sp.csr_matrix(adj)
-    sp.save_npz(drug_sim_file, adj)  # 保存'''
+    # adj = drug_sim
+    # adj = sp.csr_matrix(adj)
+    # sp.save_npz(drug_sim_file, adj)  
+保存'''
 
 
     cross_validation(K, examples, dataset, neighbor_sample_size)

@@ -3,8 +3,8 @@
 import os
 from keras.callbacks import *
 
-from SmileGNN.config import ModelConfig
-from SmileGNN.callbacks import SWA
+from config import ModelConfig
+from callbacks import SWA
 
 
 class BaseModel(object):

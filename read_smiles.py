@@ -1,19 +1,6 @@
 import pandas as pd
 import numpy as np
-
-CSV_FILE_PATH = './all_smiles.csv'
-data = pd.read_csv(CSV_FILE_PATH,encoding="Windows-1256")
-data = data.dropna(axis=0,subset = ["SMILES"])
-p_data = data
-print(data.columns.values.tolist())
-print(len(data))
-
-smiles=[]
-for i in data['SMILES']:
-    smiles.append(i)
-#print(smiles[0])
-#'CCC(C)C(NC(=O)C(CC(=O)N[O-])Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)[O-]'
-
+from sklearn.decomposition import PCA
 
 def smi_preprocessing(smi_sequence):
     splited_smis=[]
@@ -60,15 +47,6 @@ def smi_preprocessing(smi_sequence):
         splited_smis.append(splited_smi)
     return splited_smis
 
-smi = smi_preprocessing(smiles)
-print(smi[0])
-
-vocalbulary=[]
-for i in smi:
-    vocalbulary.extend(i)
-vocalbulary=list(set(vocalbulary))
-
-print(vocalbulary, len(vocalbulary))
 def smi2id(smiles,vocalbulary):
     sequence_id=[]
     for i in range(len(smiles)):
@@ -78,10 +56,6 @@ def smi2id(smiles,vocalbulary):
         sequence_id.append(smi_id)
     return sequence_id
 
-docs = dict(zip(vocalbulary, range(len(vocalbulary))))
-print(docs)
-
-
 def one_hot_encoding(smi, vocalbulary):
     res=[]
     for i in vocalbulary:
@@ -90,8 +64,6 @@ def one_hot_encoding(smi, vocalbulary):
         else:
             res.append(0)
     return res
-
-print(one_hot_encoding(smi[0], vocalbulary))
 
 def encode_smiles(smi,vocalbulary):
     res = []
@@ -105,28 +77,53 @@ def encode_smiles(smi,vocalbulary):
     new_df = df.dropna(axis=0, subset=['keggid'])
     new_df.to_csv('./encoded_smiles_all.csv', encoding='utf-8',index=False)
 
-
-from sklearn.decomposition import PCA
 def calculate_pca(profile_file,output_file,p_data):
     pca = PCA(copy=True, iterated_power='auto', n_components=96, random_state=None,
               svd_solver='auto', tol=0.0, whiten=False)
-    df = pd.read_csv(profile_file, index_col=0)
+    df = pd.read_csv(profile_file) #, index_col=0
 
-    X = df.values
+    X = df[df.columns[:-2]].values # dbid, keggid drop
     X = pca.fit_transform(X)
 
     new_df = pd.DataFrame(X, columns=['PC_%d' % (i + 1) for i in range(96)], index=df.index)
     print(new_df.shape)
-    new_df['dbid'] = p_data['DrugBank ID'].values.tolist()
-    new_df['keggid'] = p_data['KEGG Drug ID'].values.tolist()
+    new_df['dbid'] = df['dbid'].values.tolist()
+    new_df['keggid'] = df['keggid'].values.tolist()
     print(new_df.head())
-    new_df = new_df.dropna(axis=0, subset=['keggid'])
+    # new_df = new_df.dropna(axis=0, subset=['keggid'])
     new_df.to_csv(output_file, encoding='utf-8',index=False)
     return new_df
 
+if __name__ == '__main__':
+    CSV_FILE_PATH = './all_smiles.csv'
+    data = pd.read_csv(CSV_FILE_PATH,encoding="Windows-1256")
+    data = data.dropna(axis=0,subset = ["SMILES"])
+    p_data = data
+    print(data.columns.values.tolist())
+    print(len(data))
 
-encode_smiles(smi,vocalbulary)
-input_file = "./encoded_smiles2.csv"
-output_file = "./pca_smiles_kegg_96.csv"
-new_data = calculate_pca(input_file, output_file,p_data)
+    smiles=[]
+    for i in data['SMILES']:
+        smiles.append(i)
+    #print(smiles[0])
+    #'CCC(C)C(NC(=O)C(CC(=O)N[O-])Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)[O-]'
+    smi = smi_preprocessing(smiles)
+    print(smi[0])
+
+    vocalbulary=[]
+    for i in smi:
+        vocalbulary.extend(i)
+    vocalbulary=list(set(vocalbulary))
+
+    print(vocalbulary, len(vocalbulary))
+    docs = dict(zip(vocalbulary, range(len(vocalbulary))))
+    print(docs)
+
+    print(one_hot_encoding(smi[0], vocalbulary))
+
+
+    encode_smiles(smi,vocalbulary)
+    input_file = "./encoded_smiles_all.csv"
+    output_file = "./pca_smiles_kegg.csv"
+    new_data = calculate_pca(input_file, output_file,p_data)
 
