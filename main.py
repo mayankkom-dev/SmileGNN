@@ -154,7 +154,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
     train_log['test_aupr'] =aupr
     
     logger.info('Finding new DDI Interaction')
-    outfile = f"{RESULT_DATA_DIR}/'{config.exp_name}.csv"
+    outfile = f"{RESULT_DATA_DIR}/{config.exp_name}.csv"
     compare_y(test_data[:, :1], test_data[:, 1:2], test_data[:, 2:3], y_pred, y_pred_2, outfile)
     
     logger.info(f'Test Evaluation metrics - test_auc: {auc}, test_acc: {acc}, test_f1: {f1}, test_aupr: {aupr}')

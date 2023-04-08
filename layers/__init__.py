@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from .aggregator import SumAggregator, ConcatAggregator, NeighAggregator,featureAggregator
+from .aggregator import SumAggregator, ConcatAggregator, NeighAggregator,featureAggregator, AvgAggregator
 
 Aggregator = {
     'sum': SumAggregator,
     'concat': ConcatAggregator,
     'neigh': NeighAggregator,
-    'feature':featureAggregator
+    'feature':featureAggregator,
+    'average': AvgAggregator
 }

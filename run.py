@@ -289,7 +289,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
     # Assign the remaining indices to the last fold
     subsets_folds[K_fold - 1] = remain
     # List of all aggregator types to use for experimentations
-    aggregator_types = ['sum', 'concat', 'neigh']
+    aggregator_types = ['sum', 'concat', 'neigh', 'average']
     
     logger.info(f'Running {K_fold} fold cross validation for {dataset} dataset')
     # Create a dictionary to store the results of each fold
