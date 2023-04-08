@@ -3,27 +3,6 @@
 from tensorflow.keras.layers import Layer
 from keras import backend as K
 
-# class AvgAggregator(Layer):
-#     def __init__(self, activation: str ='relu', initializer='glorot_normal', regularizer=None,
-#                  **kwargs):
-#         super(AvgAggregator, self).__init__(**kwargs)
-#         if activation == 'relu':
-#             self.activation = K.relu
-#         elif activation == 'tanh':
-#             self.activation = K.tanh
-#         else:
-#             raise ValueError(f'`activation` not understood: {activation}')
-#         self.initializer = initializer
-#         self.regularizer = regularizer
-#     def build(self, input_shape):
-#         ent_embed_dim = input_shape[0][-1]
-#         self.w = self.add_weight(name=self.name+'_w', shape=(ent_embed_dim, ent_embed_dim),
-#                                  initializer=self.initializer, regularizer=self.regularizer)
-#         self.b = self.add_weight(name=self.name+'_b', shape=(ent_embed_dim,), initializer='zeros')
-#         super(SumAggregator, self).build(input_shape) 
-
-
-
 class SumAggregator(Layer):
     def __init__(self, activation: str ='relu', initializer='glorot_normal', regularizer=None,
                  **kwargs):
@@ -50,12 +29,6 @@ class SumAggregator(Layer):
 
     def compute_output_shape(self, input_shape):
         return input_shape[0]
-    
-    def get_config(self):
-        config = super(SumAggregator, self).get_config()
-        config.update({"config": self.config})
-        return config
-
 
 class ConcatAggregator(Layer):
     def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
@@ -87,11 +60,6 @@ class ConcatAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
-    def get_config(self):
-        config = super(ConcatAggregator, self).get_config()
-        config.update({"config": self.config})
-        return config
-
 class NeighAggregator(Layer):
     def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
                  **kwargs):
@@ -122,39 +90,6 @@ class NeighAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
-    def get_config(self):
-        config = super(NeighAggregator, self).get_config()
-        config.update({"config": self.config})
-        return config
-'''
-#使用sum方法连接feature 正式模型未使用这个方法
-class featureAggregator(Layer):
-    def __init__(self, activation: str ='relu', initializer='glorot_normal', regularizer=None,
-                 **kwargs):
-        super(featureAggregator, self).__init__(**kwargs)
-        if activation == 'relu':
-            self.activation = K.relu
-        elif activation == 'tanh':
-            self.activation = K.tanh
-        else:
-            raise ValueError(f'`activation` not understood: {activation}')
-        self.initializer = initializer
-        self.regularizer = regularizer
-
-    def build(self, input_shape):
-        ent_embed_dim = input_shape[0][-1]
-        self.w = self.add_weight(name=self.name+'_w', shape=(ent_embed_dim, ent_embed_dim),
-                                 initializer=self.initializer, regularizer=self.regularizer)
-        self.b = self.add_weight(name=self.name+'_b', shape=(ent_embed_dim,), initializer='zeros')
-        super(featureAggregator, self).build(input_shape)
-
-    def call(self, inputs, **kwargs):
-        entity, neighbor = inputs
-        return self.activation(K.dot((entity + neighbor), self.w) + self.b)
-
-    def compute_output_shape(self, input_shape):
-        return input_shape[0]
-'''
 class featureAggregator(Layer):
     def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
                  **kwargs):
@@ -187,8 +122,52 @@ class featureAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
-    def get_config(self):
-        config = super(featureAggregator, self).get_config()
-        config.update({"config": self.config})
-        return config
+'''
+#使用sum方法连接feature 正式模型未使用这个方法
+class featureAggregator(Layer):
+    def __init__(self, activation: str ='relu', initializer='glorot_normal', regularizer=None,
+                 **kwargs):
+        super(featureAggregator, self).__init__(**kwargs)
+        if activation == 'relu':
+            self.activation = K.relu
+        elif activation == 'tanh':
+            self.activation = K.tanh
+        else:
+            raise ValueError(f'`activation` not understood: {activation}')
+        self.initializer = initializer
+        self.regularizer = regularizer
 
+    def build(self, input_shape):
+        ent_embed_dim = input_shape[0][-1]
+        self.w = self.add_weight(name=self.name+'_w', shape=(ent_embed_dim, ent_embed_dim),
+                                 initializer=self.initializer, regularizer=self.regularizer)
+        self.b = self.add_weight(name=self.name+'_b', shape=(ent_embed_dim,), initializer='zeros')
+        super(featureAggregator, self).build(input_shape)
+
+    def call(self, inputs, **kwargs):
+        entity, neighbor = inputs
+        return self.activation(K.dot((entity + neighbor), self.w) + self.b)
+
+    def compute_output_shape(self, input_shape):
+        return input_shape[0]
+
+# class AvgAggregator(Layer):
+#     def __init__(self, activation: str ='relu', initializer='glorot_normal', regularizer=None,
+#                  **kwargs):
+#         super(AvgAggregator, self).__init__(**kwargs)
+#         if activation == 'relu':
+#             self.activation = K.relu
+#         elif activation == 'tanh':
+#             self.activation = K.tanh
+#         else:
+#             raise ValueError(f'`activation` not understood: {activation}')
+#         self.initializer = initializer
+#         self.regularizer = regularizer
+#     def build(self, input_shape):
+#         ent_embed_dim = input_shape[0][-1]
+#         self.w = self.add_weight(name=self.name+'_w', shape=(ent_embed_dim, ent_embed_dim),
+#                                  initializer=self.initializer, regularizer=self.regularizer)
+#         self.b = self.add_weight(name=self.name+'_b', shape=(ent_embed_dim,), initializer='zeros')
+#         super(SumAggregator, self).build(input_shape) 
+
+'''
