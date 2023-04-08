@@ -1,0 +1,70 @@
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:373} INFO - Setting up all required directories
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:207} INFO - Saving drug and entity vocabulary as pickled files
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:212} INFO - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:69} INFO - size of example: (73534, 3)
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:216} INFO - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:253} INFO - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:165} INFO - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:260} INFO - Starting 5 fold cross validation training for pdd dataset
+[10:15:56] {D:\ThesisWork\SmileGNN\run.py:283} INFO - Creating 5 - fold using total train examples: 73534
+[10:15:57] {D:\ThesisWork\SmileGNN\run.py:294} INFO - Running 5 fold cross validation for pdd dataset
+[10:15:57] {D:\ThesisWork\SmileGNN\run.py:302} INFO - Creating Train, Test and Val for  agg method : sum fold: 4 
+[10:15:57] {D:\ThesisWork\SmileGNN\run.py:314} INFO - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_101557
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:373} INFO - Setting up all required directories
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:207} INFO - Saving drug and entity vocabulary as pickled files
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:212} INFO - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:69} INFO - size of example: (73534, 3)
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:216} INFO - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:253} INFO - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:165} INFO - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:257} INFO - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:260} INFO - Starting 5 fold cross validation training for pdd dataset
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:283} INFO - Creating 5 - fold using total train examples: 73534
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:294} INFO - Running 5 fold cross validation for pdd dataset
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:302} INFO - Creating Train, Test and Val for  agg method : sum fold: 4 
+[10:17:58] {D:\ThesisWork\SmileGNN\run.py:314} INFO - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_101758
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 4 
+[10:19:10] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_101910
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:21:02] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 4 
+[10:21:50] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_102150
+[10:22:27] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[10:22:27] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[10:22:27] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 4 
+[10:22:28] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_102228

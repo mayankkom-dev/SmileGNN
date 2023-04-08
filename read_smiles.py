@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
-import logging
-logging.basicConfig(level=logging.INFO)
+import logging, config
+import sys
 
-logger = logging.getLogger(__name__)
-
+logging.basicConfig(level=logging.INFO, format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
+     datefmt='%H:%M:%S', handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler('log/run.log')]) 
 def smi_preprocessing(smi_sequence):
     splited_smis=[]
     length=[]
@@ -99,8 +99,9 @@ def calculate_pca(profile_file, output_file, p_data):
     return new_df
 
 
+
 if __name__ == '__main__':
-    drugbank_smiles_data_loc = 'dataset_used/all_smiles.csv'
+    drugbank_smiles_data_loc = f'{config.RAW_DATA_DIR}/drugbank_all_structure_links.csv'
     logger.info(f'Reading drunbank all smiles data csv files at {drugbank_smiles_data_loc}')
     db_smiles_df = pd.read_csv(drugbank_smiles_data_loc, encoding="Windows-1256")
     db_smiles_df = db_smiles_df.dropna(axis=0,subset=["SMILES"])
@@ -118,11 +119,11 @@ if __name__ == '__main__':
     print(docs)
     
     logger.info(f'OneHotEncoding smiles')
-    input_file = "preprocessed_data/encoded_smiles_all.csv"
+    input_file = f"{config.PROCESSED_DATA_DIR}/encoded_smiles_all.csv"
     print(one_hot_encoding(smi[0], vocalbulary))
     encode_smiles(smi,vocalbulary, db_smiles_df, input_file)
     
-    output_file = "preprocessed_data/pca_smiles_kegg.csv"
+    output_file = f"{config.PROCESSED_DATA_DIR}/pca_smiles_kegg.csv"
     logger.info(f'Calculating PCA and saving at {output_file}')
     new_data = calculate_pca(input_file, output_file, db_smiles_df)
 

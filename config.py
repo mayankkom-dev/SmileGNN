@@ -4,7 +4,7 @@ import os
 import tensorflow as tf
 
 RAW_DATA_DIR = os.getcwd()+'/raw_data'
-PROCESSED_DATA_DIR = os.getcwd()+'/data'
+PROCESSED_DATA_DIR = os.getcwd()+'/processed_data'
 LOG_DIR = os.getcwd()+'/log'
 MODEL_SAVED_DIR = os.getcwd()+'/ckpt'
 

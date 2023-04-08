@@ -27,6 +27,7 @@ def write_log(filename: str, log, mode='w'):
     with open(filename, mode) as writers:
         writers.write('\n')
         json.dump(log, writers, indent=4, ensure_ascii=False)
+    print(f'Successfully write log to {filename}')
 
 
 def format_filename(_dir: str, filename_template: str, **kwargs):
