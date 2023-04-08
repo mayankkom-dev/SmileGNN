@@ -8,6 +8,7 @@ import tensorflow as tf
 from sklearn.metrics import roc_auc_score, accuracy_score, f1_score, average_precision_score,precision_recall_curve
 import sklearn.metrics as m
 from utils import write_log
+import config
 
 #添加指标：ACC, AUPR, AUC-ROC, F1 +std
 
@@ -56,7 +57,7 @@ class KGCNMetric(tf.keras.callbacks.Callback):
         logs['epoch_count']=epoch+1
         print(f'Logging Info - epoch: {epoch+1}, val_auc: {auc}, val_aupr: {aupr}, val_acc: {acc}, val_f1: {f1}')
         log_list =str(np.array(logs).tolist())
-        write_log('log/train_history.txt',log_list,mode='a')
+        write_log(f'{config.LOG_DIR}/{config.EPOCH_END_LOG}',log_list,mode='a')
 
     @staticmethod
     def get_user_record(data, is_train):

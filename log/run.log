@@ -68,3 +68,363 @@
 [10:22:28] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
 [10:22:28] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 4 
 [10:22:28] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_102228
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[12:25:32] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 4 
+[12:25:33] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 4 with experiment name tf_logs/exp_pdd/sum_4CV_20230408_122533
+[12:25:33] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:25:35] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:25:36] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:25:37] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:26:20] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:46
+[12:26:20] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:26:20] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9639274105081653, val_acc: 0.9082132172967092, val_f1: 0.9101078705553336, val_aupr: 0.9554757383981196
+[12:26:20] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:26:21] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:26:21] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 419 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:26:31] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9630162693938656, test_acc: 0.9061862678450034, test_f1: 0.9070581896551723, test_aupr: 0.9518392051093448
+[12:26:31] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 3 
+[12:26:31] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 3 with experiment name tf_logs/exp_pdd/sum_3CV_20230408_122631
+[12:26:31] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:26:32] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:26:33] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:26:34] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:27:19] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:47
+[12:27:19] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:27:19] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9677746388623544, val_acc: 0.9162246702026384, val_f1: 0.9163725224002173, val_aupr: 0.9610744756398217
+[12:27:19] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:27:20] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:27:20] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 361 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:27:30] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.96535840000616, test_acc: 0.9116007071943425, test_f1: 0.9147429171038824, test_aupr: 0.9599489305190786
+[12:27:30] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 2 
+[12:27:30] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 2 with experiment name tf_logs/exp_pdd/sum_2CV_20230408_122730
+[12:27:30] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:27:31] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:27:32] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:27:33] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:50
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9683042531279964, val_acc: 0.9140486876104991, val_f1: 0.9162470182878346, val_aupr: 0.9634621091797608
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:28:21] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 408 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:28:31] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9681599887540278, test_acc: 0.9152726778185775, test_f1: 0.9168557320165487, test_aupr: 0.9609546529204913
+[12:28:32] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 1 
+[12:28:32] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 1 with experiment name tf_logs/exp_pdd/sum_1CV_20230408_122832
+[12:28:32] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:28:33] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:28:34] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:28:35] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:55
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9662989147009683, val_acc: 0.9092887256901945, val_f1: 0.9081899518238128, val_aupr: 0.9576873763259546
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:29:28] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 315 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:29:38] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9653615371502945, test_acc: 0.9057527539779682, test_f1: 0.9044006069802731, test_aupr: 0.956181722906318
+[12:29:38] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : sum fold: 0 
+[12:29:38] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with sum aggregator forfold 0 with experiment name tf_logs/exp_pdd/sum_0CV_20230408_122938
+[12:29:39] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:29:40] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:29:40] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:29:41] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:46
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.965127385212581, val_acc: 0.9140486876104991, val_f1: 0.9163578613022763, val_aupr: 0.9587067174107309
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:30:26] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 386 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_sum_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:30:36] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9668434018320818, test_acc: 0.9124167006663947, test_f1: 0.9138576779026217, test_aupr: 0.9572007163796228
+[12:30:36] [D:\ThesisWork\SmileGNN\run.py:368] [INFO] - ####################################################################################################
+[12:30:36] [D:\ThesisWork\SmileGNN\run.py:369] [INFO] - 5 fold result: avg_auc: 0.965747919427286, avg_acc: 0.9102458215004573, avg_f1: 0.9113830247316997, avg_aupr: 0.9572250455669711
+[12:30:36] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : concat fold: 4 
+[12:30:36] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with concat aggregator forfold 4 with experiment name tf_logs/exp_pdd/concat_4CV_20230408_123036
+[12:30:36] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:30:38] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:30:38] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:30:40] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:31:25] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[12:31:25] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:31:25] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9645439953844788, val_acc: 0.9086211585531684, val_f1: 0.9105669417088103, val_aupr: 0.956539614465456
+[12:31:25] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:31:26] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:31:26] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 456 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:31:36] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9627277287558283, test_acc: 0.9079537729435758, test_f1: 0.9110731643241824, test_aupr: 0.9546470074896817
+[12:31:36] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : concat fold: 3 
+[12:31:36] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with concat aggregator forfold 3 with experiment name tf_logs/exp_pdd/concat_3CV_20230408_123136
+[12:31:36] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:31:37] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:31:38] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:31:39] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:32:24] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[12:32:24] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:32:25] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9724926372650585, val_acc: 0.920032639738882, val_f1: 0.922283901665345, val_aupr: 0.9688546956635673
+[12:32:25] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:32:25] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:32:25] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 404 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:32:35] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9657388945896939, test_acc: 0.9110567115463076, test_f1: 0.913031914893617, test_aupr: 0.9586004024124825
+[12:32:35] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : concat fold: 2 
+[12:32:35] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with concat aggregator forfold 2 with experiment name tf_logs/exp_pdd/concat_2CV_20230408_123235
+[12:32:35] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:32:36] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:32:37] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:32:38] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:33:23] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:47
+[12:33:23] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:33:24] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9687793535967095, val_acc: 0.9144566843465253, val_f1: 0.9151261638105519, val_aupr: 0.9626401255859705
+[12:33:24] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:33:24] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:33:24] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 436 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:33:34] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9656295446487602, test_acc: 0.9105127158982728, test_f1: 0.913670952505904, test_aupr: 0.960476844557915
+[12:33:34] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : concat fold: 1 
+[12:33:34] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with concat aggregator forfold 1 with experiment name tf_logs/exp_pdd/concat_1CV_20230408_123334
+[12:33:34] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:33:35] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:33:36] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:33:37] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9674739148905305, val_acc: 0.9139126886984904, val_f1: 0.9143552969828169, val_aupr: 0.9594862085107434
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:34:23] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 365 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:34:33] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9708514917471083, test_acc: 0.9164966680266557, test_f1: 0.918242343541944, test_aupr: 0.9654493687085656
+[12:34:34] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : concat fold: 0 
+[12:34:34] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with concat aggregator forfold 0 with experiment name tf_logs/exp_pdd/concat_0CV_20230408_123434
+[12:34:34] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:34:35] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:34:36] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:34:37] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:35:22] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[12:35:22] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:35:23] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9625520635814535, val_acc: 0.9082007343941249, val_f1: 0.9096989966555183, val_aupr: 0.9540462085662585
+[12:35:23] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:35:23] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:35:23] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 389 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_concat_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:35:33] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9675727604958411, test_acc: 0.9133686930504556, test_f1: 0.9156626506024098, test_aupr: 0.9626284388402264
+[12:35:33] [D:\ThesisWork\SmileGNN\run.py:368] [INFO] - ####################################################################################################
+[12:35:33] [D:\ThesisWork\SmileGNN\run.py:369] [INFO] - 5 fold result: avg_auc: 0.9665040840474463, avg_acc: 0.9118777122930535, avg_f1: 0.9143362051736114, avg_aupr: 0.9603604124017743
+[12:35:33] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : neigh fold: 4 
+[12:35:33] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with neigh aggregator forfold 4 with experiment name tf_logs/exp_pdd/neigh_4CV_20230408_123533
+[12:35:33] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:35:34] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:35:35] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:35:36] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:45
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.967946076137065, val_acc: 0.9141963557247756, val_f1: 0.9157205823427274, val_aupr: 0.9619644279976383
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:36:19] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 427 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:36:29] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9602060830685439, test_acc: 0.9082256968048946, test_f1: 0.9102512963701634, test_aupr: 0.9464809344510752
+[12:36:30] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : neigh fold: 3 
+[12:36:30] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with neigh aggregator forfold 3 with experiment name tf_logs/exp_pdd/neigh_3CV_20230408_123630
+[12:36:30] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:36:31] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:36:32] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:36:32] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:37:15] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:45
+[12:37:15] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:37:55] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.967295909042814, val_acc: 0.9174486604107167, val_f1: 0.9191421340082591, val_aupr: 0.9587040202679075
+[12:37:55] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:37:55] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:37:55] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 389 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:38:05] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9674424291119368, test_acc: 0.9139126886984904, test_f1: 0.9159474173416545, test_aupr: 0.9586258515439068
+[12:38:06] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : neigh fold: 2 
+[12:38:06] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with neigh aggregator forfold 2 with experiment name tf_logs/exp_pdd/neigh_2CV_20230408_123806
+[12:38:06] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:38:07] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:38:07] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:38:08] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:39:03] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:57
+[12:39:03] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:39:04] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9660587786604047, val_acc: 0.9103767169862641, val_f1: 0.9112696916655447, val_aupr: 0.9583618152617905
+[12:39:04] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:39:04] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:39:04] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 407 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:39:14] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9620280290209892, test_acc: 0.9080647354821162, test_f1: 0.9095289079229123, test_aupr: 0.9539442763973639
+[12:39:14] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : neigh fold: 1 
+[12:39:14] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with neigh aggregator forfold 1 with experiment name tf_logs/exp_pdd/neigh_1CV_20230408_123914
+[12:39:14] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:39:15] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:39:16] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:39:17] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:40:06] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:51
+[12:40:06] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:40:40] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9666250808633392, val_acc: 0.9144566843465253, val_f1: 0.9151948227045975, val_aupr: 0.9576565827517933
+[12:40:40] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:40:40] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:40:40] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 349 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:40:50] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9640601685475905, test_acc: 0.9111927104583163, test_f1: 0.9103883628379306, test_aupr: 0.9533100016677116
+[12:40:50] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : neigh fold: 0 
+[12:40:50] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with neigh aggregator forfold 0 with experiment name tf_logs/exp_pdd/neigh_0CV_20230408_124050
+[12:40:50] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[12:40:51] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[12:40:52] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:40:53] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:01:14
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9639373703909486, val_acc: 0.909968720250238, val_f1: 0.9099564744287268, val_aupr: 0.9524066752063358
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[12:42:05] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 353 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/'kgcn_pdd_neigh_4_embed_64_depth_2_agg_neigh_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[12:42:15] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9599538148613743, test_acc: 0.8993608051135591, test_f1: 0.899945916711736, test_aupr: 0.9519551564673135
+[12:42:16] [D:\ThesisWork\SmileGNN\run.py:368] [INFO] - ####################################################################################################
+[12:42:16] [D:\ThesisWork\SmileGNN\run.py:369] [INFO] - 5 fold result: avg_auc: 0.9627381049220869, avg_acc: 0.9081513273114753, avg_f1: 0.9092123802368792, avg_aupr: 0.9528632441054743
+[17:06:34] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:06:35] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_170635
+[17:06:35] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:07:46] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_170746
+[17:07:46] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:09:02] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_170902
+[17:09:02] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:10:10] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:10:10] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:10:10] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:10:11] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_171011
+[17:10:11] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:11:21] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:11:22] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_171122
+[17:11:22] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:12:42] [D:\ThesisWork\SmileGNN\run.py:373] [INFO] - Setting up all required directories
+[17:12:42] [D:\ThesisWork\SmileGNN\run.py:207] [INFO] - Saving drug and entity vocabulary as pickled files
+[17:12:42] [D:\ThesisWork\SmileGNN\run.py:212] [INFO] - Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:69] [INFO] - size of example: (73534, 3)
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:216] [INFO] - Saved approved example file as D:\ThesisWork\SmileGNN/processed_data\pdd_examples.npy
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:253] [INFO] - Reading drug feature from file, converting to numpy array, and saving as npy file
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:165] [INFO] - 1084 drugs have smiles feature, 922 drugs do not have smiles feature
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:257] [INFO] - Saved drug feature npy: D:\ThesisWork\SmileGNN/processed_data\pdd_drug_feature.npy
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:260] [INFO] - Starting 5 fold cross validation training for pdd dataset
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:283] [INFO] - Creating 5 - fold using total train examples: 73534
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:294] [INFO] - Running 5 fold cross validation for pdd dataset
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 4 
+[17:12:43] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 4 with experiment name tf_logs/exp_pdd/average_4CV_20230408_171243
+[17:12:43] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:12:44] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[17:12:45] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:12:47] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:13:32] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[17:13:32] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[17:14:09] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9668817857756669, val_acc: 0.9112047865107424, val_f1: 0.9127588510354041, val_aupr: 0.9590238533145934
+[17:14:09] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[17:14:10] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[17:14:10] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 342 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[17:14:20] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9693265878814692, test_acc: 0.91162474507138, test_f1: 0.9106652006597031, test_aupr: 0.9636530609790545
+[17:14:20] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 3 
+[17:14:20] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 3 with experiment name tf_logs/exp_pdd/average_3CV_20230408_171420
+[17:14:20] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:14:21] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[17:14:22] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:14:23] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:48
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9674313314659693, val_acc: 0.9129606963144294, val_f1: 0.9145299145299145, val_aupr: 0.9568717130094918
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[17:15:09] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 415 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[17:15:19] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.967886297958477, test_acc: 0.9156806745546036, test_f1: 0.9183780937335438, test_aupr: 0.9597306064247952
+[17:15:19] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 2 
+[17:15:19] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 2 with experiment name tf_logs/exp_pdd/average_2CV_20230408_171519
+[17:15:19] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:15:20] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[17:15:21] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:15:22] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:50
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9669531651703639, val_acc: 0.9135046919624643, val_f1: 0.9158507541677692, val_aupr: 0.9596038034728056
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[17:16:10] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 416 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[17:16:20] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9672437413266721, test_acc: 0.915952672378621, test_f1: 0.916711590296496, test_aupr: 0.9588296126167433
+[17:16:20] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 1 
+[17:16:20] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 1 with experiment name tf_logs/exp_pdd/average_1CV_20230408_171620
+[17:16:20] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:16:21] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[17:16:22] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:16:23] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:50
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9700345495482763, val_acc: 0.9140486876104991, val_f1: 0.9146176708997569, val_aupr: 0.9637299107166102
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[17:17:12] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 401 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[17:17:22] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9683312013222662, test_acc: 0.913640690874473, test_f1: 0.9160386090175856, test_aupr: 0.963064837684407
+[17:17:22] [D:\ThesisWork\SmileGNN\run.py:302] [INFO] - Creating Train, Test and Val for  agg method : average fold: 0 
+[17:17:22] [D:\ThesisWork\SmileGNN\run.py:314] [INFO] - Start Training for pdd dataset with average aggregator forfold 0 with experiment name tf_logs/exp_pdd/average_0CV_20230408_171722
+[17:17:22] [D:\ThesisWork\SmileGNN\main.py:106] [INFO] - Starting Experiment: kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50
+[17:17:23] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\callbacks.py:2294] [WARNING] - Model failed to serialize as JSON. Ignoring... maximum recursion depth exceeded
+[17:17:24] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:17:25] [C:\Users\mayan\anaconda3\envs\smile-tf-env\lib\site-packages\keras\optimizers\optimizer_v2\utils.py:82] [WARNING] - Gradients do not exist for variables ['adj_entity:0', 'adj_relation:0'] when minimizing the loss. If you're using `model.compile()`, did you forget to provide a `loss` argument?
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:119] [INFO] - Training time: 00:00:50
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:123] [INFO] - Evaluating over valid data:
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:127] [INFO] - Train Evaluation Metrics: val_auc: 0.9673791281831332, val_acc: 0.913640690874473, val_f1: 0.9160163999470969, val_aupr: 0.9607528101594114
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:147] [INFO] - Evaluate over test data:
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:156] [INFO] - Finding new DDI Interaction
+[17:18:13] [D:\ThesisWork\SmileGNN\main.py:51] [INFO] - Found 373 new DDI dumping at D:\ThesisWork\SmileGNN/result_data/kgcn_pdd_neigh_4_embed_64_depth_2_agg_average_optimizer_adam_lr_0.01_batch_size_1024_epoch_50.csv
+[17:18:23] [D:\ThesisWork\SmileGNN\main.py:160] [INFO] - Test Evaluation metrics - test_auc: 0.9671523691964724, test_acc: 0.9143206854345165, test_f1: 0.9166666666666667, test_aupr: 0.9612130890505478
+[17:18:23] [D:\ThesisWork\SmileGNN\run.py:368] [INFO] - ####################################################################################################
+[17:18:23] [D:\ThesisWork\SmileGNN\run.py:369] [INFO] - 5 fold result: avg_auc: 0.9679880395370712, avg_acc: 0.9142438936627189, avg_f1: 0.9156920320747991, avg_aupr: 0.9612982413511096

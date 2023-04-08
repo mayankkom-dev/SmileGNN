@@ -35,9 +35,10 @@ TEST_DATA_TEMPLATE = '{dataset}_test.npy'
 DRUG_FEATURE_TEMPLATE = '{dataset}_drug_feature.npy'
 DRUG_SIM_TEMPLATE = '{dataset}_drug_sim.npz'
 #RESULT_LOG='result.txt'
-RESULT_LOG={'drugbank':'drugbank_result.txt','kegg':'kegg_result.txt','pdd':'pdd_result.txt'}
-PERFORMANCE_LOG = 'kgcn_performance.log'
+RESULT_LOG={'drugbank':'drugbank_result_test_avg_k_fold.txt','kegg':'kegg_result_test_avg_k_fold.txt','pdd':'pdd_result_test_avg_k_fold.txt'}
+PERFORMANCE_LOG = 'SmileGNN_performance_per_fold.log'
 DRUG_EXAMPLE='{dataset}_examples.npy'
+EPOCH_END_LOG = 'train_epoch_end_log.txt'
 
 class ModelConfig(object):
     def __init__(self):
