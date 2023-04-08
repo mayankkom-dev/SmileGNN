@@ -40,7 +40,6 @@ class ScoreLayer(Layer):
         drug_drug_score = tf.sigmoid(tf.reduce_sum(drug1 * drug2, axis=-1, keepdims=True))
 
         return drug_drug_score
-
     
 class NeighborInfoLayer(Layer):
     def __init__(self, config, **kwargs):
@@ -351,11 +350,13 @@ class KGCN(BaseModel):
         self.callbacks.append(KGCNMetric(x_train, y_train, x_valid, y_valid,
                                          self.config.aggregator_type, self.config.dataset, self.config.K_Fold,
                                          self.config.batch_size))
-        print('Logging Info - Callback Added: KGCNMetric...')
-
+    def add_tboard_callback(self):
+        self.callbacks.append(self.config.callbacks_tb)
+        
     def fit(self, x_train, y_train, x_valid, y_valid):
         self.callbacks = []
         self.add_metrics(x_train, y_train, x_valid, y_valid)
+        self.add_tboard_callback()
         self.init_callbacks()
         print('Logging Info - Start training...')
         self.model.fit(x=x_train, y=y_train, batch_size=self.config.batch_size,

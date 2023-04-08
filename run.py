@@ -5,8 +5,10 @@ import os
 import numpy as np
 import re
 from collections import defaultdict
+# sys.path.append('/home/.../SmileGNN/')  # add the env path
 from sklearn.model_selection import train_test_split, StratifiedKFold
 from main import train
+from datetime import datetime
 # from SmileGNN.layers.feature import *
 
 from config import DRUG_EXAMPLE, RESULT_LOG, PROCESSED_DATA_DIR, LOG_DIR, MODEL_SAVED_DIR, ENTITY2ID_FILE, \
@@ -260,6 +262,9 @@ def cross_validation(K_fold, examples, dataset, neighbor_sample_size):
                 if i != j:
                     train_d.extend(examples[list(subsets[j])])
             train_data = np.array(train_d)
+            
+            exp_name_simple = 'tf_logs/exp_{}/{}_{}CV_{}'.format(dataset, t, i, datetime.now().strftime('%Y%m%d_%H%M%S'))
+            
             if dataset == 'kegg':
                 train_log = train(
                     kfold=count,
@@ -275,7 +280,8 @@ def cross_validation(K_fold, examples, dataset, neighbor_sample_size):
                     optimizer_type='adam',
                     batch_size=2048,
                     aggregator_type=t,
-                    n_epoch=50,
+                    n_epoch=50, 
+                    exp_name_simple=exp_name_simple,
                     callbacks_to_add=['modelcheckpoint', 'earlystopping'],
                 )
             elif dataset == 'pdd':
@@ -294,6 +300,7 @@ def cross_validation(K_fold, examples, dataset, neighbor_sample_size):
                     batch_size=1024,
                     aggregator_type=t,
                     n_epoch=50,
+                    exp_name_simple=exp_name_simple,
                     callbacks_to_add=['modelcheckpoint', 'earlystopping'],
                 )
             count += 1

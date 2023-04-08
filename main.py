@@ -11,7 +11,7 @@ import numpy as np
 from collections import defaultdict
 from keras import backend as K
 from keras import optimizers
-
+from tensorflow.keras.callbacks import TensorBoard
 from utils import load_data, pickle_load, format_filename, write_log
 from models import KGCN
 from config import ModelConfig, PROCESSED_DATA_DIR,  ENTITY_VOCAB_TEMPLATE, \
@@ -51,7 +51,7 @@ def compare_y(drug1,drug2,y_train,y_pred,y_pred_2):
 
 
 def train(train_d,dev_d,test_d,kfold,dataset, neighbor_sample_size, embed_dim, n_depth, l2_weight, lr, optimizer_type,
-          batch_size, aggregator_type, n_epoch, callbacks_to_add=None, overwrite=True):
+          batch_size, aggregator_type, n_epoch, exp_name_simple, callbacks_to_add=None, overwrite=True):
     config = ModelConfig()
     config.neighbor_sample_size = neighbor_sample_size
     config.embed_dim = embed_dim
@@ -81,7 +81,14 @@ def train(train_d,dev_d,test_d,kfold,dataset, neighbor_sample_size, embed_dim, n
                                                   dataset=dataset))
 
     config.drug_feature = np.load(format_filename(PROCESSED_DATA_DIR, DRUG_FEATURE_TEMPLATE, dataset=dataset),allow_pickle=True)
-
+    config.callbacks_tb = TensorBoard(log_dir=exp_name_simple,
+                                        histogram_freq=0,
+                                        write_graph=True,
+                                        write_images=False,
+                                        update_freq='batch',
+                                        profile_batch=0,
+                                        embeddings_freq=1)
+    
 
     config.exp_name = f'kgcn_{dataset}_neigh_{neighbor_sample_size}_embed_{embed_dim}_depth_' \
                       f'{n_depth}_agg_{aggregator_type}_optimizer_{optimizer_type}_lr_{lr}_' \
