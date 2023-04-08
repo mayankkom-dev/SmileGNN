@@ -50,6 +50,11 @@ class SumAggregator(Layer):
 
     def compute_output_shape(self, input_shape):
         return input_shape[0]
+    
+    def get_config(self):
+        config = super(SumAggregator, self).get_config()
+        config.update({"config": self.config})
+        return config
 
 
 class ConcatAggregator(Layer):
@@ -82,6 +87,10 @@ class ConcatAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
+    def get_config(self):
+        config = super(ConcatAggregator, self).get_config()
+        config.update({"config": self.config})
+        return config
 
 class NeighAggregator(Layer):
     def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
@@ -113,6 +122,10 @@ class NeighAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
+    def get_config(self):
+        config = super(NeighAggregator, self).get_config()
+        config.update({"config": self.config})
+        return config
 '''
 #使用sum方法连接feature 正式模型未使用这个方法
 class featureAggregator(Layer):
@@ -174,5 +187,8 @@ class featureAggregator(Layer):
     def compute_output_shape(self, input_shape):
         return input_shape[0]
 
-
+    def get_config(self):
+        config = super(featureAggregator, self).get_config()
+        config.update({"config": self.config})
+        return config
 

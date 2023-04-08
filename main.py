@@ -16,7 +16,8 @@ from models import KGCN
 from config import ModelConfig, PROCESSED_DATA_DIR,  ENTITY_VOCAB_TEMPLATE, \
     RELATION_VOCAB_TEMPLATE, ADJ_ENTITY_TEMPLATE, ADJ_RELATION_TEMPLATE, LOG_DIR, PERFORMANCE_LOG, \
     DRUG_VOCAB_TEMPLATE, DRUG_FEATURE_TEMPLATE,DRUG_SIM_TEMPLATE, RESULT_DATA_DIR
-import logging
+import logging, sys
+
 logging.basicConfig(level=logging.INFO, format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
      datefmt='%H:%M:%S', handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler('log/run.log')]) 
 logger = logging.getLogger(__name__)
