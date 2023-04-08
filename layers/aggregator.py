@@ -156,7 +156,7 @@ class featureAggregator(Layer):
         return input_shape[0]
 
     def get_config(self):
-        config = super(SumAggregator, self).get_config()
+        config = super(featureAggregator, self).get_config()
         config.update({
             'activation': self.activation,
             'initializer': self.initializer,

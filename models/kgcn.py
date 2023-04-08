@@ -41,6 +41,15 @@ class ScoreLayer(Layer):
 
         return drug_drug_score
     
+    def get_config(self):
+        config = super(ScoreLayer, self).get_config()
+        config.update({
+            'activation': self.activation,
+            'aggregator': self.aggregator,
+            'l2_reg': self.l2_reg,
+        })
+        return config
+    
 class NeighborInfoLayer(Layer):
     def __init__(self, config, **kwargs):
         super(NeighborInfoLayer, self).__init__(**kwargs)
@@ -94,7 +103,10 @@ class ReceptiveFieldLayer(Layer):
 
     def get_config(self):
         config = super(ReceptiveFieldLayer, self).get_config()
-        config.update({"config": self.config})
+        config.update({"config": self.config,
+                       "adj_entity_matrix": self.adj_entity_matrix,
+                       "adj_relation_matrix": self.adj_relation_matrix,
+                       "n_neighbor": self.n_neighbor})
         return config
 
 class FeatureLayer(Layer):
@@ -118,7 +130,8 @@ class FeatureLayer(Layer):
 
     def get_config(self):
         config = super(FeatureLayer, self).get_config()
-        config.update({"config": self.config})
+        config.update({"config": self.config,
+                       "drug_feature_tensor": self.drug_feature_tensor})
         return config
     
 class KGCN(BaseModel):
