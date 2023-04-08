@@ -352,7 +352,7 @@ class KGCN(BaseModel):
                                          self.config.batch_size))
     def add_tboard_callback(self):
         self.callbacks.append(self.config.callbacks_tb)
-        
+        print('Logging Info - Callback Added: KGCNMetric...')
     def fit(self, x_train, y_train, x_valid, y_valid):
         self.callbacks = []
         self.add_metrics(x_train, y_train, x_valid, y_valid)

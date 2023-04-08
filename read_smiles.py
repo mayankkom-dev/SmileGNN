@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
+import logging
+logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 def smi_preprocessing(smi_sequence):
     splited_smis=[]
@@ -65,7 +69,7 @@ def one_hot_encoding(smi, vocalbulary):
             res.append(0)
     return res
 
-def encode_smiles(smi,vocalbulary):
+def encode_smiles(smi,vocalbulary, p_data, output_file):
     res = []
     for drug_smile in smi:
         res.append(one_hot_encoding(drug_smile,vocalbulary))
@@ -75,9 +79,9 @@ def encode_smiles(smi,vocalbulary):
     df['dbid'] = p_data['DrugBank ID'].values.tolist()
     df['keggid'] = p_data['KEGG Drug ID'].values.tolist()
     new_df = df.dropna(axis=0, subset=['keggid'])
-    new_df.to_csv('./encoded_smiles_all.csv', encoding='utf-8',index=False)
+    new_df.to_csv(output_file, encoding='utf-8',index=False)
 
-def calculate_pca(profile_file,output_file,p_data):
+def calculate_pca(profile_file, output_file, p_data):
     pca = PCA(copy=True, iterated_power='auto', n_components=96, random_state=None,
               svd_solver='auto', tol=0.0, whiten=False)
     df = pd.read_csv(profile_file) #, index_col=0
@@ -94,36 +98,31 @@ def calculate_pca(profile_file,output_file,p_data):
     new_df.to_csv(output_file, encoding='utf-8',index=False)
     return new_df
 
+
 if __name__ == '__main__':
-    CSV_FILE_PATH = './all_smiles.csv'
-    data = pd.read_csv(CSV_FILE_PATH,encoding="Windows-1256")
-    data = data.dropna(axis=0,subset = ["SMILES"])
-    p_data = data
-    print(data.columns.values.tolist())
-    print(len(data))
-
-    smiles=[]
-    for i in data['SMILES']:
-        smiles.append(i)
-    #print(smiles[0])
-    #'CCC(C)C(NC(=O)C(CC(=O)N[O-])Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)[O-]'
-    smi = smi_preprocessing(smiles)
-    print(smi[0])
-
-    vocalbulary=[]
-    for i in smi:
-        vocalbulary.extend(i)
+    drugbank_smiles_data_loc = 'dataset_used/all_smiles.csv'
+    logger.info(f'Reading drunbank all smiles data csv files at {drugbank_smiles_data_loc}')
+    db_smiles_df = pd.read_csv(drugbank_smiles_data_loc, encoding="Windows-1256")
+    db_smiles_df = db_smiles_df.dropna(axis=0,subset=["SMILES"])
+    print(db_smiles_df.columns.values.tolist())
+    print(db_smiles_df.shape)
+    all_smiles = db_smiles_df['SMILES'].values.tolist()
+    logger.info(f'Pre-processing smiles to generate splitted words')
+    smi = smi_preprocessing(all_smiles)
+    print(smi[0][:5])
+    logger.info(f'Computing vocabulary')
+    vocalbulary=[splitted_word for splitted_word_list in smi for splitted_word in splitted_word_list]
     vocalbulary=list(set(vocalbulary))
-
     print(vocalbulary, len(vocalbulary))
     docs = dict(zip(vocalbulary, range(len(vocalbulary))))
     print(docs)
-
+    
+    logger.info(f'OneHotEncoding smiles')
+    input_file = "preprocessed_data/encoded_smiles_all.csv"
     print(one_hot_encoding(smi[0], vocalbulary))
-
-
-    encode_smiles(smi,vocalbulary)
-    input_file = "./encoded_smiles_all.csv"
-    output_file = "./pca_smiles_kegg.csv"
-    new_data = calculate_pca(input_file, output_file,p_data)
+    encode_smiles(smi,vocalbulary, db_smiles_df, input_file)
+    
+    output_file = "preprocessed_data/pca_smiles_kegg.csv"
+    logger.info(f'Calculating PCA and saving at {output_file}')
+    new_data = calculate_pca(input_file, output_file, db_smiles_df)
 
