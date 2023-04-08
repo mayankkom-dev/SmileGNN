@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-
 import os
 import tensorflow as tf
 
 RAW_DATA_DIR = os.getcwd()+'/raw_data'
 PROCESSED_DATA_DIR = os.getcwd()+'/processed_data'
+RESULT_DATA_DIR = os.getcwd()+'/result_data'
 LOG_DIR = os.getcwd()+'/log'
 MODEL_SAVED_DIR = os.getcwd()+'/ckpt'
 

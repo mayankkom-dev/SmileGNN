@@ -6,6 +6,8 @@ import sys
 
 logging.basicConfig(level=logging.INFO, format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
      datefmt='%H:%M:%S', handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler('log/run.log')]) 
+logger = logging.getLogger(__name__)
+
 def smi_preprocessing(smi_sequence):
     splited_smis=[]
     length=[]
