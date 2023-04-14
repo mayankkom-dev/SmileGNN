@@ -128,7 +128,7 @@ def read_kg(file_path: str, entity_vocab: dict, relation_vocab: dict, neighbor_s
 
         adj_entity[entity_id] = np.array([all_neighbors[neigh_entity][0] for neigh_entity in sample_neighbors])
         adj_relation[entity_id] = np.array([all_neighbors[neigh_entity][1] for neigh_entity in sample_neighbors])
-
+    logger.info(f'No neighbor for {np_neighbor_ctr} entities')
     return adj_entity, adj_relation
 
 def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
@@ -209,9 +209,10 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
     
     # Save drug and entity vocabulary as pickled files
     logger.info(f'Saving drug and entity vocabulary as pickled files')
-    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, str_rep, config.DRUG_VOCAB_TEMPLATE, dataset=dataset), drug_vocab)
-    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, str_rep, config.ENTITY_VOCAB_TEMPLATE, dataset=dataset), entity_vocab)
-
+    pickle_dump(format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), 
+                                config.DRUG_VOCAB_TEMPLATE, dataset=dataset), drug_vocab)
+    pickle_dump(format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), 
+                                config.ENTITY_VOCAB_TEMPLATE, dataset=dataset), entity_vocab)
     # Read approved example file, convert to numpy array, and save as npy file
     logger.info(f'Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix')
     approved_example_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_EXAMPLE, dataset=dataset)
@@ -258,10 +259,10 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
     logger.info(f'Reading drug feature from file, converting to numpy array, and saving as npy file')
     drug_feature = read_feature(os.path.join(config.PROCESSED_DATA_DIR , str_rep, f'pca_{str_rep}_kegg.csv'), 
                                 entity2id, drug_vocab,dataset)
-    drug_feature_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep)
+    drug_feature_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), 
+                                        config.DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep)
     np.save(drug_feature_file, drug_feature, allow_pickle=True)
     logger.info(f'Saved drug feature npy: {drug_feature_file}')
-    
     # Start cv training
     logger.info(f'Starting {K} fold cross validation training for {dataset} dataset')
     cross_validation(K, approved_examples, dataset, neighbor_sample_size)
@@ -372,14 +373,15 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                 continue
             agg_method_results[key] = agg_method_results[key] / K_fold
         # Write the results to the log file
-        write_log(format_filename(config.LOG_DIR, config.RESULT_LOG[dataset]), agg_method_results, 'a')
+        write_log(format_filename(os.path.join(config.LOG_DIR, str_rep),
+                                  config.RESULT_LOG[dataset]), agg_method_results, 'a')
         logger.info('#'*100)
         logger.info(f'{K_fold} fold result: avg_auc: {agg_method_results["avg_auc"]}, avg_acc: {agg_method_results["avg_acc"]}, avg_f1: {agg_method_results["avg_f1"]}, avg_aupr: {agg_method_results["avg_aupr"]}')
 
 
 if __name__ == '__main__':
     logger.info('Setting up all required directories')
-    str_rep = "selfies"
+    str_rep = "smiles"
     check_folder_exists = [config.PROCESSED_DATA_DIR, config.LOG_DIR, config.MODEL_SAVED_DIR, 
                            config.TF_LOG_DIR, config.RESULT_DATA_DIR]
     for folder in check_folder_exists:
@@ -388,8 +390,8 @@ if __name__ == '__main__':
             os.makedirs(folder)
 
     model_config = config.ModelConfig()
-    # process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5, str_rep)
-    process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5, str_rep)
+    process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5, str_rep)
+    # process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5, str_rep)
 
 
 

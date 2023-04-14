@@ -13,7 +13,7 @@ import config
 #添加指标：ACC, AUPR, AUC-ROC, F1 +std
 
 class KGCNMetric(tf.keras.callbacks.Callback):
-    def __init__(self, x_train, y_train, x_valid, y_valid,aggregator_type,dataset,K_fold,batch_size):
+    def __init__(self, x_train, y_train, x_valid, y_valid,aggregator_type,dataset,K_fold,batch_size, str_rep):
         self.x_train = x_train
         self.y_train = y_train
         self.x_valid = x_valid
@@ -23,6 +23,7 @@ class KGCNMetric(tf.keras.callbacks.Callback):
         self.k=K_fold
         self.threshold=0.5
         self.batch_size = batch_size
+        self.str_rep = str_rep
         # self.user_list, self.train_record, self.valid_record, \
         #     self.item_set, self.k_list = self.topk_settings()
 
@@ -57,7 +58,7 @@ class KGCNMetric(tf.keras.callbacks.Callback):
         logs['epoch_count']=epoch+1
         print(f'Logging Info - epoch: {epoch+1}, val_auc: {auc}, val_aupr: {aupr}, val_acc: {acc}, val_f1: {f1}')
         log_list =str(np.array(logs).tolist())
-        write_log(f'{config.LOG_DIR}/{config.EPOCH_END_LOG}',log_list,mode='a')
+        write_log(f'{config.LOG_DIR}/{self.str_rep}/{config.EPOCH_END_LOG}',log_list,mode='a')
 
     @staticmethod
     def get_user_record(data, is_train):

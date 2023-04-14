@@ -51,9 +51,9 @@ def compare_y(drug1, drug2, y_train, y_pred, y_pred_2, outfile):
     logger.info(f"Found {df.shape[0]} new DDI dumping at {outfile}")
     time.sleep(10)
 
-
+# model_type param to handle kgnn, smilegnn and custom model loads
 def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_dim, n_depth, l2_weight, lr, optimizer_type,
-          batch_size, aggregator_type, n_epoch, exp_name_simple, str_rep, callbacks_to_add=None, overwrite=True):
+          batch_size, aggregator_type, n_epoch, exp_name_simple, str_rep, callbacks_to_add=None, overwrite=True, model_type='kgcn'):
     # setting up model config using param provided
     config = ModelConfig()
     config.neighbor_sample_size = neighbor_sample_size
@@ -93,7 +93,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
                                         embeddings_freq=0)
 
 
-    config.exp_name = f'kgcn_{dataset}_{str_rep}_neigh_{neighbor_sample_size}_embed_{embed_dim}_depth_' \
+    config.exp_name = f'{model_type}_{dataset}_{str_rep}_neigh_{neighbor_sample_size}_embed_{embed_dim}_depth_' \
                       f'{n_depth}_agg_{aggregator_type}_optimizer_{optimizer_type}_lr_{lr}_' \
                       f'batch_size_{batch_size}_epoch_{n_epoch}'
     callback_str = '_' + '_'.join(config.callbacks_to_add)
@@ -114,7 +114,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
     if not os.path.exists(model_save_path) or overwrite:
         start_time = time.time()
         model.fit(x_train=[train_data[:, :1], train_data[:, 1:2]], y_train=train_data[:, 2:3],
-                  x_valid=[valid_data[:, :1], valid_data[:, 1:2]], y_valid=valid_data[:, 2:3])
+                  x_valid=[valid_data[:, :1], valid_data[:, 1:2]], y_valid=valid_data[:, 2:3], str_rep=str_rep)
         elapsed_time = time.time() - start_time
         logger.info('Training time: %s' % time.strftime("%H:%M:%S",
                                                                  time.gmtime(elapsed_time)))
@@ -169,7 +169,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
         logger.info(f'swa_test_auc: {auc}, swa_test_acc: {acc}, swa_test_f1: {f1}, swa_test_aupr: {aupr}')
     
     train_log['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-    write_log(format_filename(os.path.join(LOG_DIR, str_rep), PERFORMANCE_LOG), log=train_log, mode='a')
+    write_log(format_filename(os.path.join(LOG_DIR, str_rep), PERFORMANCE_LOG.format(model_type)), log=train_log, mode='a')
     del model
     gc.collect()
     K.clear_session()

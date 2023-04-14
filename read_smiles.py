@@ -121,11 +121,11 @@ if __name__ == '__main__':
     print(docs)
     
     logger.info(f'OneHotEncoding smiles')
-    input_file = f"{config.PROCESSED_DATA_DIR}/smile/encoded_smiles_all.csv"
+    input_file = f"{config.PROCESSED_DATA_DIR}/smiles/encoded_smiles_all.csv"
     print(one_hot_encoding(smi[0], vocalbulary))
     encode_smiles(smi,vocalbulary, db_smiles_df, input_file)
     
-    output_file = f"{config.PROCESSED_DATA_DIR}/smile/pca_smiles_kegg.csv"
+    output_file = f"{config.PROCESSED_DATA_DIR}/smiles/pca_smiles_kegg.csv"
     logger.info(f'Calculating PCA and saving at {output_file}')
     new_data = calculate_pca(input_file, output_file, db_smiles_df)
 

@@ -359,18 +359,18 @@ class KGCN(BaseModel):
 
         return drug_drug_score
 
-    def add_metrics(self, x_train, y_train, x_valid, y_valid):
+    def add_metrics(self, x_train, y_train, x_valid, y_valid, str_rep):
         self.callbacks.append(KGCNMetric(x_train, y_train, x_valid, y_valid,
                                          self.config.aggregator_type, self.config.dataset, self.config.K_Fold,
-                                         self.config.batch_size))
+                                         self.config.batch_size, str_rep))
     
     def add_tboard_callback(self):
         self.callbacks.append(self.config.callbacks_tboard)
         print('Logging Info - Callback Added: KGCNMetric...')
     
-    def fit(self, x_train, y_train, x_valid, y_valid):
+    def fit(self, x_train, y_train, x_valid, y_valid, str_rep):
         self.callbacks = []
-        self.add_metrics(x_train, y_train, x_valid, y_valid)
+        self.add_metrics(x_train, y_train, x_valid, y_valid, str_rep)
         self.add_tboard_callback()
         self.init_callbacks()
         print('Logging Info - Start training...')
