@@ -53,7 +53,7 @@ def compare_y(drug1, drug2, y_train, y_pred, y_pred_2, outfile):
 
 
 def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_dim, n_depth, l2_weight, lr, optimizer_type,
-          batch_size, aggregator_type, n_epoch, exp_name_simple, callbacks_to_add=None, overwrite=True):
+          batch_size, aggregator_type, n_epoch, exp_name_simple, str_rep, callbacks_to_add=None, overwrite=True):
     # setting up model config using param provided
     config = ModelConfig()
     config.neighbor_sample_size = neighbor_sample_size
@@ -69,31 +69,31 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
     config.n_epoch = n_epoch
     config.callbacks_to_add = callbacks_to_add
 
-    config.drug_vocab_size = len(pickle_load(format_filename(PROCESSED_DATA_DIR,
+    config.drug_vocab_size = len(pickle_load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep),
                                                              DRUG_VOCAB_TEMPLATE,
                                                              dataset=dataset)))
-    config.entity_vocab_size = len(pickle_load(format_filename(PROCESSED_DATA_DIR,
+    config.entity_vocab_size = len(pickle_load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep),
                                                                ENTITY_VOCAB_TEMPLATE,
                                                                dataset=dataset)))
-    config.relation_vocab_size = len(pickle_load(format_filename(PROCESSED_DATA_DIR,
+    config.relation_vocab_size = len(pickle_load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep),
                                                                  RELATION_VOCAB_TEMPLATE,
                                                                  dataset=dataset)))
-    config.adj_entity = np.load(format_filename(PROCESSED_DATA_DIR, ADJ_ENTITY_TEMPLATE,
+    config.adj_entity = np.load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep), ADJ_ENTITY_TEMPLATE,
                                                 dataset=dataset))
-    config.adj_relation = np.load(format_filename(PROCESSED_DATA_DIR, ADJ_RELATION_TEMPLATE,
+    config.adj_relation = np.load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep), ADJ_RELATION_TEMPLATE,
                                                   dataset=dataset))
 
-    config.drug_feature = np.load(format_filename(PROCESSED_DATA_DIR, DRUG_FEATURE_TEMPLATE, dataset=dataset),allow_pickle=True)
+    config.drug_feature = np.load(format_filename(os.path.join(PROCESSED_DATA_DIR, str_rep), DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep),allow_pickle=True)
     config.callbacks_tboard = TensorBoard(log_dir=exp_name_simple,
                                         histogram_freq=0,
                                         write_graph=True,
                                         write_images=False,
                                         update_freq='batch',
                                         profile_batch=0,
-                                        embeddings_freq=1)
+                                        embeddings_freq=0)
 
 
-    config.exp_name = f'kgcn_{dataset}_neigh_{neighbor_sample_size}_embed_{embed_dim}_depth_' \
+    config.exp_name = f'kgcn_{dataset}_{str_rep}_neigh_{neighbor_sample_size}_embed_{embed_dim}_depth_' \
                       f'{n_depth}_agg_{aggregator_type}_optimizer_{optimizer_type}_lr_{lr}_' \
                       f'batch_size_{batch_size}_epoch_{n_epoch}'
     callback_str = '_' + '_'.join(config.callbacks_to_add)
@@ -104,7 +104,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
     train_log = {'exp_name': config.exp_name, 'batch_size': batch_size, 'optimizer': optimizer_type,
                  'epoch': n_epoch, 'learning_rate': lr}
     logger.info(f'Starting Experiment: {config.exp_name}')
-    model_save_path = os.path.join(config.checkpoint_dir, '{}.hdf5'.format(config.exp_name))
+    model_save_path = os.path.join(config.checkpoint_dir, str_rep, '{}.hdf5'.format(config.exp_name))
     model = KGCN(config)
 
     train_data=np.array(train_d)
@@ -151,10 +151,10 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
     train_log['test_auc'] = auc
     train_log['test_acc'] = acc
     train_log['test_f1'] = f1
-    train_log['test_aupr'] =aupr
+    train_log['test_aupr'] = aupr
     
     logger.info('Finding new DDI Interaction')
-    outfile = f"{RESULT_DATA_DIR}/{config.exp_name}.csv"
+    outfile = f"{RESULT_DATA_DIR}/{str_rep}/{config.exp_name}.csv"
     compare_y(test_data[:, :1], test_data[:, 1:2], test_data[:, 2:3], y_pred, y_pred_2, outfile)
     
     logger.info(f'Test Evaluation metrics - test_auc: {auc}, test_acc: {acc}, test_f1: {f1}, test_aupr: {aupr}')
@@ -169,7 +169,7 @@ def train(train_d, dev_d, test_d, kfold, dataset, neighbor_sample_size, embed_di
         logger.info(f'swa_test_auc: {auc}, swa_test_acc: {acc}, swa_test_f1: {f1}, swa_test_aupr: {aupr}')
     
     train_log['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-    write_log(format_filename(LOG_DIR, PERFORMANCE_LOG), log=train_log, mode='a')
+    write_log(format_filename(os.path.join(LOG_DIR, str_rep), PERFORMANCE_LOG), log=train_log, mode='a')
     del model
     gc.collect()
     K.clear_session()

@@ -266,7 +266,7 @@ class KGCN(BaseModel):
         # drug_drug_score = self.getscore(
         #     [drug1_embed, drug2_embed, drug1_feature, drug2_feature])
         drug_drug_score = score_layer([drug1_embed, drug2_embed, drug1_feature, drug2_feature])
-        print(drug_drug_score)
+        # print(drug_drug_score)
 
         model = Model([input_drug_one, input_drug_two], drug_drug_score)
         model.compile(optimizer=self.config.optimizer,

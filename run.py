@@ -143,7 +143,7 @@ def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
     Returns:
         drug_smiles (np.array): Array of drug structure feature vectors.
     '''
-    drug_smiles = np.zeros(shape=(len(drug_vocab), 64), dtype=float)
+    drug_smiles = np.zeros(shape=(len(drug_vocab), 96), dtype=float)
     pca_smiles_df = pd.read_csv(file_path, sep=',', on_bad_lines='skip')
     data = pca_smiles_df.values.tolist()
     i, j = 0, 0
@@ -159,10 +159,10 @@ def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
             j += 1
         else:
             i += 1
-            drug_feature = drug[0:64]
+            drug_feature = drug[0:96]
             drug_smiles[entity2id[drug_name]] = np.array(drug_feature)
     
-    logger.info(f'{i} drugs have smiles feature, {j} drugs do not have smiles feature')
+    logger.info(f'{i} drugs in {dataset} KG, {j} drugs from KG not in {dataset} dataset')
     return drug_smiles
 
 def read_sim(file_path: str, entity2id: dict, drug_vocab: dict):
@@ -185,7 +185,7 @@ def read_sim(file_path: str, entity2id: dict, drug_vocab: dict):
     print(i, len(drug_vocab) * len(drug_vocab))
     return drug_sim
 
-def process_data(dataset: str, neighbor_sample_size: int, K: int):
+def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
     '''
     Method to process the raw data into the format required by the model and 
     train KGNN model using K Fold Cross Validation
@@ -194,6 +194,10 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int):
         dataset (str): The name of dataset to process [kegg, pdd]
         neighbor_sample_size (int): The number of neighbors to sample for each node
         K (int): The number of Cross Validation Folds
+        str_rep (str): The type of structure representation to use [smiles, selfies]
+
+    Returns:
+        None
     '''
     # Create empty dictionaries for drug, entity, and relation vocabulary
     drug_vocab = {}
@@ -205,24 +209,25 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int):
     
     # Save drug and entity vocabulary as pickled files
     logger.info(f'Saving drug and entity vocabulary as pickled files')
-    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, config.DRUG_VOCAB_TEMPLATE, dataset=dataset), drug_vocab)
-    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, config.ENTITY_VOCAB_TEMPLATE, dataset=dataset), entity_vocab)
+    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, str_rep, config.DRUG_VOCAB_TEMPLATE, dataset=dataset), drug_vocab)
+    pickle_dump(format_filename(config.PROCESSED_DATA_DIR, str_rep, config.ENTITY_VOCAB_TEMPLATE, dataset=dataset), entity_vocab)
 
     # Read approved example file, convert to numpy array, and save as npy file
     logger.info(f'Reading approved example file, converting to numpy array, and saving as npy file Interaction Matrix')
-    approved_example_file = format_filename(config.PROCESSED_DATA_DIR, config.DRUG_EXAMPLE, dataset=dataset)
+    approved_example_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_EXAMPLE, dataset=dataset)
     approved_examples = read_approved_example_file(config.EXAMPLE_FILE[dataset], config.SEPARATOR[dataset], drug_vocab)
     np.save(approved_example_file, approved_examples)
     logger.info(f'Saved approved example file as {approved_example_file}')
 
     # Processed npy absolute file paths
-    adj_entity_file = format_filename(config.PROCESSED_DATA_DIR, config.ADJ_ENTITY_TEMPLATE, dataset=dataset)
-    adj_relation_file = format_filename(config.PROCESSED_DATA_DIR, config.ADJ_RELATION_TEMPLATE, dataset=dataset)
-    drug_vocab_npy = format_filename(config.PROCESSED_DATA_DIR, config.DRUG_VOCAB_TEMPLATE, dataset=dataset)
-    entity_vocab_npy = format_filename(config.PROCESSED_DATA_DIR, config.ENTITY_VOCAB_TEMPLATE, dataset=dataset)
-    relation_vocab_npy = format_filename(config.PROCESSED_DATA_DIR, config.RELATION_VOCAB_TEMPLATE, dataset=dataset)
+    # rewrite drug and entity vocab and log message about missing smile representation later
+    adj_entity_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_ENTITY_TEMPLATE, dataset=dataset)
+    adj_relation_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_RELATION_TEMPLATE, dataset=dataset)
+    drug_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_VOCAB_TEMPLATE, dataset=dataset)
+    entity_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ENTITY_VOCAB_TEMPLATE, dataset=dataset)
+    relation_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.RELATION_VOCAB_TEMPLATE, dataset=dataset)
 
-    all_files = [adj_entity_file, adj_relation_file, drug_vocab_npy, entity_vocab_npy, relation_vocab_npy]
+    all_files = [adj_entity_file, adj_relation_file, drug_vocab_npy, entity_vocab_npy, relation_vocab_npy] 
 
     if not all([os.path.exists(file_) for file_ in all_files]):
         # Read KG file and get adjacency entities and relations and also create relation vocabulary
@@ -251,8 +256,9 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int):
 
     # Read drug feature from file, convert to numpy array, and save as npy file
     logger.info(f'Reading drug feature from file, converting to numpy array, and saving as npy file')
-    drug_feature = read_feature(os.path.join(config.PROCESSED_DATA_DIR + '/pca_smiles_kegg.csv'), entity2id, drug_vocab,dataset)
-    drug_feature_file = format_filename(config.PROCESSED_DATA_DIR, config.DRUG_FEATURE_TEMPLATE, dataset=dataset)
+    drug_feature = read_feature(os.path.join(config.PROCESSED_DATA_DIR , str_rep, f'pca_{str_rep}_kegg.csv'), 
+                                entity2id, drug_vocab,dataset)
+    drug_feature_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep)
     np.save(drug_feature_file, drug_feature, allow_pickle=True)
     logger.info(f'Saved drug feature npy: {drug_feature_file}')
     
@@ -310,7 +316,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                     train_d.extend(train_examples[list(subsets_folds[fold_])])
             train_data = np.array(train_d)
             # creating simple experiment name for loggig using callback and tensorboard
-            exp_name_simple = 'tf_logs/exp_{}/{}_{}CV_{}'.format(dataset, agg_method, fold, datetime.now().strftime('%Y%m%d_%H%M%S'))
+            exp_name_simple = 'tf_logs/exp_{}/{}/{}_{}CV_{}'.format(dataset, str_rep, agg_method, fold, datetime.now().strftime('%Y%m%d_%H%M%S'))
             logger.info(f'Start Training for {dataset} dataset with {agg_method} aggregator for'
                             f'fold {fold} with experiment name {exp_name_simple}')
             
@@ -331,6 +337,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                     aggregator_type=agg_method,
                     n_epoch=50, 
                     exp_name_simple=exp_name_simple,
+                    str_rep=str_rep,
                     callbacks_to_add=['modelcheckpoint', 'earlystopping'],
                 )
             elif dataset == 'pdd':
@@ -350,6 +357,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                     aggregator_type=agg_method,
                     n_epoch=50,
                     exp_name_simple=exp_name_simple,
+                    str_rep=str_rep,
                     callbacks_to_add=['modelcheckpoint', 'earlystopping'],
                 )
             count += 1
@@ -371,15 +379,17 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
 
 if __name__ == '__main__':
     logger.info('Setting up all required directories')
-    check_folder_exists = [config.PROCESSED_DATA_DIR, config.LOG_DIR, config.MODEL_SAVED_DIR]
+    str_rep = "selfies"
+    check_folder_exists = [config.PROCESSED_DATA_DIR, config.LOG_DIR, config.MODEL_SAVED_DIR, 
+                           config.TF_LOG_DIR, config.RESULT_DATA_DIR]
     for folder in check_folder_exists:
         if not os.path.exists(folder):
             logger.info(f'Creating {folder}')
             os.makedirs(folder)
 
     model_config = config.ModelConfig()
-    #process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5)
-    process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5)
+    # process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5, str_rep)
+    process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5, str_rep)
 
 
 

@@ -6,6 +6,7 @@ PROCESSED_DATA_DIR = os.getcwd()+'/processed_data'
 RESULT_DATA_DIR = os.getcwd()+'/result_data'
 LOG_DIR = os.getcwd()+'/log'
 MODEL_SAVED_DIR = os.getcwd()+'/ckpt'
+TF_LOG_DIR = os.getcwd()+'/tf_log'
 
 KG_FILE = {
            'drugbank':os.path.join(RAW_DATA_DIR,'drugbank','train2id.txt'),
@@ -32,7 +33,7 @@ ADJ_RELATION_TEMPLATE = '{dataset}_adj_relation.npy'
 TRAIN_DATA_TEMPLATE = '{dataset}_train.npy'
 DEV_DATA_TEMPLATE = '{dataset}_dev.npy'
 TEST_DATA_TEMPLATE = '{dataset}_test.npy'
-DRUG_FEATURE_TEMPLATE = '{dataset}_drug_feature.npy'
+DRUG_FEATURE_TEMPLATE = '{dataset}_{str_rep}_drug_feature.npy'
 DRUG_SIM_TEMPLATE = '{dataset}_drug_sim.npz'
 #RESULT_LOG='result.txt'
 RESULT_LOG={'drugbank':'drugbank_result_test_avg_k_fold.txt','kegg':'kegg_result_test_avg_k_fold.txt','pdd':'pdd_result_test_avg_k_fold.txt'}
@@ -43,11 +44,11 @@ EPOCH_END_LOG = 'train_epoch_end_log.txt'
 class ModelConfig(object):
     def __init__(self):
         self.neighbor_sample_size = 4 # neighbor sampling size
-        self.embed_dim = 32  # dimension of embedding
+        self.embed_dim = 64  # dimension of embedding
         self.n_depth = 2    # depth of receptive field
         self.l2_weight = 1e-7  # l2 regularizer weight
-        self.lr = 2e-2  # learning rate
-        self.batch_size = 65536
+        self.lr = 10e-2  # learning rate
+        self.batch_size = 1024
         self.aggregator_type = 'sum'
         self.n_epoch = 50
         self.optimizer = 'adam'
