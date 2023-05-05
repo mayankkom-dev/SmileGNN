@@ -6,7 +6,7 @@ PROCESSED_DATA_DIR = os.getcwd()+'/processed_data'
 RESULT_DATA_DIR = os.getcwd()+'/result_data'
 LOG_DIR = os.getcwd()+'/log'
 MODEL_SAVED_DIR = os.getcwd()+'/ckpt'
-TF_LOG_DIR = os.getcwd()+'/tf_log'
+TF_LOG_DIR = os.getcwd()+'/tf_logs'
 
 KG_FILE = {
            'drugbank':os.path.join(RAW_DATA_DIR,'drugbank','train2id.txt'),
@@ -22,7 +22,7 @@ EXAMPLE_FILE = {
                'pdd':os.path.join(RAW_DATA_DIR,'pdd','approved_example.txt')}
 SEPARATOR = {'drug':'\t','kegg':'\t','pdd':' '}
 THRESHOLD = {'drug':4,'kegg':4,'pdd':4} #添加drug修改
-NEIGHBOR_SIZE = {'drug':4,'kegg':4,'pdd':4}
+NEIGHBOR_SIZE = {'drug':4,'kegg':16,'pdd':6}
 
 #
 DRUG_VOCAB_TEMPLATE = '{dataset}_drug_vocab.pkl'
@@ -33,13 +33,13 @@ ADJ_RELATION_TEMPLATE = '{dataset}_adj_relation.npy'
 TRAIN_DATA_TEMPLATE = '{dataset}_train.npy'
 DEV_DATA_TEMPLATE = '{dataset}_dev.npy'
 TEST_DATA_TEMPLATE = '{dataset}_test.npy'
-DRUG_FEATURE_TEMPLATE = '{dataset}_{str_rep}_drug_feature.npy'
+DRUG_FEATURE_TEMPLATE = '{dataset}_{str_rep}_drug_feature_{embed_dim}.npy'
 DRUG_SIM_TEMPLATE = '{dataset}_drug_sim.npz'
 #RESULT_LOG='result.txt'
 RESULT_LOG={'drugbank':'drugbank_result_test_avg_k_fold.txt','kegg':'kegg_result_test_avg_k_fold.txt','pdd':'pdd_result_test_avg_k_fold.txt'}
-PERFORMANCE_LOG = '{}_performance_per_fold.log'
+PERFORMANCE_LOG = '{}_{}_performance_per_fold.log'
 DRUG_EXAMPLE='{dataset}_examples.npy'
-EPOCH_END_LOG = 'train_epoch_end_log.txt'
+EPOCH_END_LOG = '{}_train_epoch_end_log.txt'
 
 class ModelConfig(object):
     def __init__(self):
@@ -49,7 +49,7 @@ class ModelConfig(object):
         self.l2_weight = 1e-7  # l2 regularizer weight
         self.lr = 10e-2  # learning rate
         self.batch_size = 1024
-        self.aggregator_type = 'sum'
+        self.aggregator_type = 'feature' #'sum'
         self.n_epoch = 50
         self.optimizer = 'adam'
 

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
-import logging, config
+import logging, config, os
 import sys
 
 logging.basicConfig(level=logging.INFO, format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
@@ -81,17 +81,18 @@ def encode_smiles(smi,vocalbulary, p_data, output_file):
     df['dbid'] = p_data['DrugBank ID'].values.tolist()
     df['keggid'] = p_data['KEGG Drug ID'].values.tolist()
     new_df = df.dropna(axis=0, subset=['keggid'])
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)    
     new_df.to_csv(output_file, encoding='utf-8',index=False)
 
-def calculate_pca(profile_file, output_file, p_data):
-    pca = PCA(copy=True, iterated_power='auto', n_components=96, random_state=None,
+def calculate_pca(profile_file, output_file, p_data, embed_dim):
+    pca = PCA(copy=True, iterated_power='auto', n_components=embed_dim,
               svd_solver='auto', tol=0.0, whiten=False)
     df = pd.read_csv(profile_file) #, index_col=0
 
     X = df[df.columns[:-2]].values # dbid, keggid drop
     X = pca.fit_transform(X)
 
-    new_df = pd.DataFrame(X, columns=['PC_%d' % (i + 1) for i in range(96)], index=df.index)
+    new_df = pd.DataFrame(X, columns=['PC_%d' % (i + 1) for i in range(embed_dim)], index=df.index)
     print(new_df.shape)
     new_df['dbid'] = df['dbid'].values.tolist()
     new_df['keggid'] = df['keggid'].values.tolist()
@@ -100,9 +101,21 @@ def calculate_pca(profile_file, output_file, p_data):
     new_df.to_csv(output_file, encoding='utf-8',index=False)
     return new_df
 
-
+def seed_everything(seed: int):
+    import random, os
+    import numpy as np
+    import torch
+    
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = True
 
 if __name__ == '__main__':
+    seed_everything(42)
     drugbank_smiles_data_loc = f'{config.RAW_DATA_DIR}/drugbank_all_structure_links.csv'
     logger.info(f'Reading drunbank all smiles data csv files at {drugbank_smiles_data_loc}')
     db_smiles_df = pd.read_csv(drugbank_smiles_data_loc, encoding="Windows-1256")
@@ -124,8 +137,8 @@ if __name__ == '__main__':
     input_file = f"{config.PROCESSED_DATA_DIR}/smiles/encoded_smiles_all.csv"
     print(one_hot_encoding(smi[0], vocalbulary))
     encode_smiles(smi,vocalbulary, db_smiles_df, input_file)
-    
-    output_file = f"{config.PROCESSED_DATA_DIR}/smiles/pca_smiles_kegg.csv"
+    embed_dim = 32
+    output_file = f"{config.PROCESSED_DATA_DIR}/smiles/pca_smiles_kegg_{embed_dim}.csv"
     logger.info(f'Calculating PCA and saving at {output_file}')
-    new_data = calculate_pca(input_file, output_file, db_smiles_df)
+    new_data = calculate_pca(input_file, output_file, db_smiles_df, embed_dim)
 

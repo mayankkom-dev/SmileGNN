@@ -13,7 +13,7 @@ import logging
 import config
 import pandas as pd
 from utils import pickle_dump, format_filename, write_log, pickle_load
-
+from utils.node2vec import Graph
 logging.basicConfig(level=logging.INFO, format= '[%(asctime)s] [%(pathname)s:%(lineno)d] [%(levelname)s] - %(message)s',
      datefmt='%H:%M:%S', handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler('log/run.log')]) 
 logger = logging.getLogger(__name__)
@@ -106,32 +106,173 @@ def read_kg(file_path: str, entity_vocab: dict, relation_vocab: dict, neighbor_s
     logger.info(f'Num of entities: {len(entity_vocab)}, '
           f'Num of relations: {len(relation_vocab)}')
 
+     # N Random Neighbor Sample
     logger.info(f'Constructing adjacency matrix with {neighbor_sample_size}')
     n_entity = len(entity_vocab)
     adj_entity = np.zeros(shape=(n_entity, neighbor_sample_size), dtype=np.int64)
     adj_relation = np.zeros(shape=(n_entity, neighbor_sample_size), dtype=np.int64)
 
     np_neighbor_ctr = 0
-    # If the number of neighboring nodes is greater than neighbor_sample_size, randomly select neighbor_sample_size of them
-    for entity_id in range(n_entity):
-        all_neighbors = kg[entity_id]
-        n_neighbor = len(all_neighbors)
-        if n_neighbor == 0:
-            logger.info(f'No neighbor for {entity_id}')
-            np_neighbor_ctr += 1
-            continue
-        sample_neighbors = np.random.choice(
-            n_neighbor,
-            neighbor_sample_size,
-            replace=False if n_neighbor >= neighbor_sample_size else True
-        )
 
-        adj_entity[entity_id] = np.array([all_neighbors[neigh_entity][0] for neigh_entity in sample_neighbors])
-        adj_relation[entity_id] = np.array([all_neighbors[neigh_entity][1] for neigh_entity in sample_neighbors])
+    sampling = 'random'
+
+    if sampling != 'random':
+        # Other Sampling Methods
+        adj_entity_full = np.zeros(shape=(n_entity, n_entity), dtype=np.int64)
+        adj_entity_full_rel = np.zeros(shape=(n_entity, n_entity), dtype=np.int64)
+        # Fill the adjacency matrix
+        for node, edges in kg.items():
+            for tail_rel in edges:
+                adj_entity_full[node][tail_rel[0]] = 1
+                adj_entity_full_rel[node][tail_rel[0]] = tail_rel[1]
+
+        # Compute the dot product between each drug and all the other drugs
+        dot_products = np.dot(adj_entity_full, adj_entity_full.T)
+        # Find the top 5 neighbors of each drug
+        
+        neighbors = []
+        relations = []
+        for i in range(n_entity):
+            if len(kg[i]) == 0:
+                logger.info(f'No neighbor for {i}')
+                np_neighbor_ctr += 1
+                continue
+            # Sort the dot products for drug i in descending order
+            sorted_indices = np.argsort(dot_products[i])[::-1]
+            # Pick the top k neighbors
+            neighbor_indices = sorted_indices[:neighbor_sample_size]
+            neighbors.append(neighbor_indices)
+            relations.append(adj_entity_full_rel[i][neighbor_indices])
+        adj_entity[entity_id] = np.array(neighbors)
+        adj_relation[entity_id] = np.array(relations)
+        
+    else:    
+
+        # If the number of neighboring nodes is greater than neighbor_sample_size, randomly select neighbor_sample_size of them
+        for entity_id in range(n_entity):
+            all_neighbors = kg[entity_id]
+            n_neighbor = len(all_neighbors)
+            if n_neighbor == 0:
+                logger.info(f'No neighbor for {entity_id}')
+                np_neighbor_ctr += 1
+                continue
+            sample_neighbors = np.random.choice(
+                n_neighbor,
+                neighbor_sample_size,
+                replace=False if n_neighbor >= neighbor_sample_size else True
+            )
+
+            adj_entity[entity_id] = np.array([all_neighbors[neigh_entity][0] for neigh_entity in sample_neighbors])
+            adj_relation[entity_id] = np.array([all_neighbors[neigh_entity][1] for neigh_entity in sample_neighbors])
     logger.info(f'No neighbor for {np_neighbor_ctr} entities')
     return adj_entity, adj_relation
 
-def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
+# def read_kg_n2vec_rwalk(file_path: str, entity_vocab: dict, relation_vocab: dict, walk_size: int, num_walks: int):
+#     '''
+#     Reads a file containing knowledge graph triples and returns a dictionary
+#     mapping entity IDs to a list of (neighbor, relation) tuples.
+#     Args:
+#         file_path (str): Path to the knowledge graph file.
+#         entity_vocab (dict): Dictionary mapping entity names to new identifiers.
+#         relation_vocab (dict): Dictionary mapping relation names to new identifiers.
+#         neighbor_sample_size (int): Number of neighbors to sample for each entity.
+#     Returns:
+#         kg (dict): Dictionary mapping entity IDs to a list of (neighbor, relation) tuples.
+#     '''
+#     print(f'Logging Info - Reading kg file: {file_path}')
+
+#     kg = defaultdict(list)
+#     with open(file_path, encoding='utf8') as reader:
+#         content = reader.readlines()
+#         count = content[0]
+#         edge_list_with_rel_type = content[1:]
+        
+        
+        
+#         count = 0
+#         for line in reader:
+#             if count == 0:
+#                 count += 1
+#                 continue
+#             head, tail, relation = line.strip().split(' ')
+
+#             if head not in entity_vocab:
+#                 entity_vocab[head] = len(entity_vocab)
+#             if tail not in entity_vocab:
+#                 entity_vocab[tail] = len(entity_vocab)
+#             if relation not in relation_vocab:
+#                 relation_vocab[relation] = len(relation_vocab)
+
+#             # undirected graph
+#             kg[entity_vocab[head]].append((entity_vocab[tail], relation_vocab[relation]))
+#             kg[entity_vocab[tail]].append((entity_vocab[head], relation_vocab[relation]))
+    
+#     logger.info(f'Num of entities: {len(entity_vocab)}, '
+#           f'Num of relations: {len(relation_vocab)}')
+
+#      # N Random Neighbor Sample
+#     logger.info(f'Constructing adjacency matrix with {neighbor_sample_size}')
+#     n_entity = len(entity_vocab)
+#     adj_entity = np.zeros(shape=(n_entity, neighbor_sample_size), dtype=np.int64)
+#     adj_relation = np.zeros(shape=(n_entity, neighbor_sample_size), dtype=np.int64)
+
+#     np_neighbor_ctr = 0
+
+#     sampling = 'random'
+
+#     if sampling != 'random':
+#         # Other Sampling Methods
+#         adj_entity_full = np.zeros(shape=(n_entity, n_entity), dtype=np.int64)
+#         adj_entity_full_rel = np.zeros(shape=(n_entity, n_entity), dtype=np.int64)
+#         # Fill the adjacency matrix
+#         for node, edges in kg.items():
+#             for tail_rel in edges:
+#                 adj_entity_full[node][tail_rel[0]] = 1
+#                 adj_entity_full_rel[node][tail_rel[0]] = tail_rel[1]
+
+#         # Compute the dot product between each drug and all the other drugs
+#         dot_products = np.dot(adj_entity_full, adj_entity_full.T)
+#         # Find the top 5 neighbors of each drug
+        
+#         neighbors = []
+#         relations = []
+#         for i in range(n_entity):
+#             if len(kg[i]) == 0:
+#                 logger.info(f'No neighbor for {i}')
+#                 np_neighbor_ctr += 1
+#                 continue
+#             # Sort the dot products for drug i in descending order
+#             sorted_indices = np.argsort(dot_products[i])[::-1]
+#             # Pick the top k neighbors
+#             neighbor_indices = sorted_indices[:neighbor_sample_size]
+#             neighbors.append(neighbor_indices)
+#             relations.append(adj_entity_full_rel[i][neighbor_indices])
+#         adj_entity[entity_id] = np.array(neighbors)
+#         adj_relation[entity_id] = np.array(relations)
+        
+#     else:    
+
+#         # If the number of neighboring nodes is greater than neighbor_sample_size, randomly select neighbor_sample_size of them
+#         for entity_id in range(n_entity):
+#             all_neighbors = kg[entity_id]
+#             n_neighbor = len(all_neighbors)
+#             if n_neighbor == 0:
+#                 logger.info(f'No neighbor for {entity_id}')
+#                 np_neighbor_ctr += 1
+#                 continue
+#             sample_neighbors = np.random.choice(
+#                 n_neighbor,
+#                 neighbor_sample_size,
+#                 replace=False if n_neighbor >= neighbor_sample_size else True
+#             )
+
+#             adj_entity[entity_id] = np.array([all_neighbors[neigh_entity][0] for neigh_entity in sample_neighbors])
+#             adj_relation[entity_id] = np.array([all_neighbors[neigh_entity][1] for neigh_entity in sample_neighbors])
+#     logger.info(f'No neighbor for {np_neighbor_ctr} entities')
+#     return adj_entity, adj_relation
+
+
+def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str, embed_dim: int):
     '''
     Reads a file containing drug structure feature vectors (derived after 
     onehot encoding and pca smiles splitted word) and returns a numpy array.
@@ -143,7 +284,7 @@ def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
     Returns:
         drug_smiles (np.array): Array of drug structure feature vectors.
     '''
-    drug_smiles = np.zeros(shape=(len(drug_vocab), 96), dtype=float)
+    drug_smiles = np.zeros(shape=(len(drug_vocab), embed_dim), dtype=float)
     pca_smiles_df = pd.read_csv(file_path, sep=',', on_bad_lines='skip')
     data = pca_smiles_df.values.tolist()
     i, j = 0, 0
@@ -159,7 +300,7 @@ def read_feature(file_path: str, entity2id: dict, drug_vocab: dict,dataset:str):
             j += 1
         else:
             i += 1
-            drug_feature = drug[0:96]
+            drug_feature = drug[0:embed_dim]
             drug_smiles[entity2id[drug_name]] = np.array(drug_feature)
     
     logger.info(f'{i} drugs in {dataset} KG, {j} drugs from KG not in {dataset} dataset')
@@ -185,7 +326,7 @@ def read_sim(file_path: str, entity2id: dict, drug_vocab: dict):
     print(i, len(drug_vocab) * len(drug_vocab))
     return drug_sim
 
-def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
+def process_data(dataset: str, neighbor_sample_size: int, K: int, out_folder: str, embed_dim :int):
     '''
     Method to process the raw data into the format required by the model and 
     train KGNN model using K Fold Cross Validation
@@ -206,7 +347,7 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
 
     # Read entity2id file and get entity2id dictionary
     entity2id = read_entity2id_file(config.ENTITY2ID_FILE[dataset], drug_vocab, entity_vocab, dataset)
-    
+    str_rep = out_folder.split('_')[0]
     # Save drug and entity vocabulary as pickled files
     logger.info(f'Saving drug and entity vocabulary as pickled files')
     pickle_dump(format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), 
@@ -222,8 +363,8 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
 
     # Processed npy absolute file paths
     # rewrite drug and entity vocab and log message about missing smile representation later
-    adj_entity_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_ENTITY_TEMPLATE, dataset=dataset)
-    adj_relation_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_RELATION_TEMPLATE, dataset=dataset)
+    adj_entity_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_ENTITY_TEMPLATE, dataset=f'{dataset}_{neighbor_sample_size}')
+    adj_relation_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ADJ_RELATION_TEMPLATE, dataset=f'{dataset}_{neighbor_sample_size}')
     drug_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.DRUG_VOCAB_TEMPLATE, dataset=dataset)
     entity_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.ENTITY_VOCAB_TEMPLATE, dataset=dataset)
     relation_vocab_npy = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), config.RELATION_VOCAB_TEMPLATE, dataset=dataset)
@@ -257,17 +398,17 @@ def process_data(dataset: str, neighbor_sample_size: int, K: int, str_rep: str):
 
     # Read drug feature from file, convert to numpy array, and save as npy file
     logger.info(f'Reading drug feature from file, converting to numpy array, and saving as npy file')
-    drug_feature = read_feature(os.path.join(config.PROCESSED_DATA_DIR , str_rep, f'pca_{str_rep}_kegg.csv'), 
-                                entity2id, drug_vocab,dataset)
+    drug_feature = read_feature(os.path.join(config.PROCESSED_DATA_DIR , str_rep, f'pca_{str_rep}_kegg_{embed_dim}.csv'), 
+                                entity2id, drug_vocab,dataset, embed_dim)
     drug_feature_file = format_filename(os.path.join(config.PROCESSED_DATA_DIR, str_rep), 
-                                        config.DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep)
+                                        config.DRUG_FEATURE_TEMPLATE, dataset=dataset, str_rep=str_rep, embed_dim=embed_dim)
     np.save(drug_feature_file, drug_feature, allow_pickle=True)
     logger.info(f'Saved drug feature npy: {drug_feature_file}')
     # Start cv training
     logger.info(f'Starting {K} fold cross validation training for {dataset} dataset')
-    cross_validation(K, approved_examples, dataset, neighbor_sample_size)
+    cross_validation(K, approved_examples, dataset, neighbor_sample_size, out_folder, embed_dim)
 
-def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
+def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size, out_folder, embed_dim):
     '''
     Method to perform K Fold Cross Validation on the dataset
     
@@ -280,6 +421,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
     Returns:
         None # Train and save the model and logs
     '''
+    # str_rep = out_folder.split('_')[0]
     # Create a dictionary to store the indices of the examples in each fold
     subsets_folds = dict()
     # Number of train_examples in each fold
@@ -296,7 +438,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
     # Assign the remaining indices to the last fold
     subsets_folds[K_fold - 1] = remain
     # List of all aggregator types to use for experimentations
-    aggregator_types = ['sum', 'concat', 'neigh', 'average']
+    aggregator_types = ['sum'] #, 'concat', 'neigh', 'average']
     
     logger.info(f'Running {K_fold} fold cross validation for {dataset} dataset')
     # Create a dictionary to store the results of each fold
@@ -317,7 +459,7 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                     train_d.extend(train_examples[list(subsets_folds[fold_])])
             train_data = np.array(train_d)
             # creating simple experiment name for loggig using callback and tensorboard
-            exp_name_simple = 'tf_logs/exp_{}/{}/{}_{}CV_{}'.format(dataset, str_rep, agg_method, fold, datetime.now().strftime('%Y%m%d_%H%M%S'))
+            exp_name_simple = 'tf_logs/exp_{}/{}/{}_{}CV_{}'.format(dataset, out_folder, agg_method, fold, datetime.now().strftime('%Y%m%d_%H%M%S'))
             logger.info(f'Start Training for {dataset} dataset with {agg_method} aggregator for'
                             f'fold {fold} with experiment name {exp_name_simple}')
             
@@ -329,37 +471,37 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                     dev_d=val_data,
                     test_d=test_data,
                     neighbor_sample_size=neighbor_sample_size,
-                    embed_dim=32,
+                    embed_dim=embed_dim,
                     n_depth=2,
                     l2_weight=1e-7,
-                    lr=2e-2,
+                    lr=1e-2,
                     optimizer_type='adam',
-                    batch_size=2048,
+                    batch_size=4096,
                     aggregator_type=agg_method,
                     n_epoch=50, 
                     exp_name_simple=exp_name_simple,
-                    str_rep=str_rep,
-                    callbacks_to_add=['modelcheckpoint', 'earlystopping'],
+                    out_folder=out_folder,
+                    callbacks_to_add=['modelcheckpoint', 'earlystopping']
                 )
             elif dataset == 'pdd':
                 train_log = train(
-                    kfold=count,
+                    kfold=count, 
                     dataset=dataset,
                     train_d=train_data,
                     dev_d=val_data,
                     test_d=test_data,
                     neighbor_sample_size=neighbor_sample_size,
-                    embed_dim=64,
+                    embed_dim=embed_dim,
                     n_depth=2,
                     l2_weight=1e-7,
-                    lr=1e-2,
+                    lr=3e-4,
                     optimizer_type='adam',
                     batch_size=1024,
                     aggregator_type=agg_method,
                     n_epoch=50,
                     exp_name_simple=exp_name_simple,
-                    str_rep=str_rep,
-                    callbacks_to_add=['modelcheckpoint', 'earlystopping'],
+                    out_folder=out_folder,
+                    callbacks_to_add=['modelcheckpoint', 'earlystopping']
                 )
             count += 1
             agg_method_results['avg_auc'] = agg_method_results['avg_auc'] + train_log['test_auc']
@@ -373,25 +515,52 @@ def cross_validation(K_fold, train_examples, dataset, neighbor_sample_size):
                 continue
             agg_method_results[key] = agg_method_results[key] / K_fold
         # Write the results to the log file
-        write_log(format_filename(os.path.join(config.LOG_DIR, str_rep),
+        res_path = os.path.join(config.LOG_DIR, out_folder)
+        os.makedirs(res_path, exist_ok=True)
+        write_log(format_filename(res_path,
                                   config.RESULT_LOG[dataset]), agg_method_results, 'a')
         logger.info('#'*100)
         logger.info(f'{K_fold} fold result: avg_auc: {agg_method_results["avg_auc"]}, avg_acc: {agg_method_results["avg_acc"]}, avg_f1: {agg_method_results["avg_f1"]}, avg_aupr: {agg_method_results["avg_aupr"]}')
 
+def seed_everything(seed: int):
+    import random, os
+    import numpy as np
+    # import torch
+    
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    # torch.manual_seed(seed)
+    # torch.cuda.manual_seed(seed)
+    # torch.backends.cudnn.deterministic = True
+    # torch.backends.cudnn.benchmark = True
+    
 
 if __name__ == '__main__':
     logger.info('Setting up all required directories')
-    str_rep = "smiles"
-    check_folder_exists = [config.PROCESSED_DATA_DIR, config.LOG_DIR, config.MODEL_SAVED_DIR, 
-                           config.TF_LOG_DIR, config.RESULT_DATA_DIR]
-    for folder in check_folder_exists:
+    seed_everything(42)
+    neigh_size = config.NEIGHBOR_SIZE['kegg']
+    out_folder = f"smiles_kegg_kgnn_{neigh_size}_mhat"  
+    check_folder_exists = [config.PROCESSED_DATA_DIR, config.TF_LOG_DIR, 
+                           config.LOG_DIR, config.MODEL_SAVED_DIR, 
+                           config.RESULT_DATA_DIR]
+    for idx, folder in enumerate(check_folder_exists):
         if not os.path.exists(folder):
             logger.info(f'Creating {folder}')
             os.makedirs(folder)
+            # create experiment wise folder
+        if idx>1: 
+             os.makedirs(os.path.join(folder, out_folder), exist_ok=True)
 
     model_config = config.ModelConfig()
-    process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5, str_rep)
-    # process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5, str_rep)
+    
+    embed_dim = {'pdd': 64, 'kegg': 32}
 
+    process_data('kegg', config.NEIGHBOR_SIZE['kegg'], 5, out_folder, embed_dim['kegg'])
+    # process_data('pdd', config.NEIGHBOR_SIZE['pdd'], 5, out_folder, embed_dim['pdd'])
+
+    # reset dump folders [ tf_logs, result_data, model_saved, result_data ]
+    # check score improvemenrt with respect to head and neighbor sample respectively.
+    # experiment wise folder creation
 
 

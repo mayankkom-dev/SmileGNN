@@ -124,6 +124,51 @@ class NeighAggregator(Layer):
     def from_config(cls, config):
         return cls(**config)
 
+class LAFAggregator(Layer):
+    def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
+                 **kwargs):
+        super(featureAggregator, self).__init__(**kwargs)
+        self.activation = activation
+        self.initializer = initializer
+        self.regularizer = regularizer
+
+    def build(self, input_shape):
+        ent_embed_dim = input_shape[0][-1]
+        neighbor_embed_dim = input_shape[1][-1]
+        self.w = self.add_weight(name=self.name + '_w',
+                                 shape=(ent_embed_dim+neighbor_embed_dim, ent_embed_dim),
+                                 initializer=self.initializer, regularizer=self.regularizer)
+        self.b = self.add_weight(name=self.name + '_b', shape=(ent_embed_dim,),
+                                 initializer='zeros')
+        super(featureAggregator, self).build(input_shape)
+
+    def call(self, inputs, **kwargs):
+        entity, neighbor = inputs
+        if self.activation == 'relu':
+            activation = K.relu
+        elif self.activation == 'tanh':
+            activation = K.tanh
+        else:
+            raise ValueError(f'`activation` not understood: {self.activation}')
+        
+        return activation(K.dot(K.concatenate([entity, neighbor]), self.w) + self.b)
+
+    def compute_output_shape(self, input_shape):
+        return input_shape[0]
+
+    def get_config(self):
+        config = super(featureAggregator, self).get_config()
+        config.update({
+            'activation': self.activation,
+            'initializer': self.initializer,
+            'regularizer': self.regularizer,
+        })
+        return config
+    
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
+    
 class featureAggregator(Layer):
     def __init__(self, activation: str = 'relu', initializer='glorot_normal', regularizer=None,
                  **kwargs):

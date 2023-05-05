@@ -13,10 +13,10 @@ class BaseModel(object):
         self.callbacks = []
         self.model = self.build()
 
-    def add_model_checkpoint(self):
+    def add_model_checkpoint(self, out_folder):
         self.callbacks.append(ModelCheckpoint(
-            filepath=os.path.join(self.config.checkpoint_dir,
-                                  '{}.hdf5'.format(self.config.exp_name)),
+            filepath=os.path.join(self.config.checkpoint_dir, out_folder,
+                                  '{}.tf'.format(self.config.exp_name)),
             monitor=self.config.checkpoint_monitor,
             save_best_only=self.config.checkpoint_save_best_only,
             save_weights_only=self.config.checkpoint_save_weights_only,
@@ -39,9 +39,9 @@ class BaseModel(object):
                                   swa_start=swa_start))
         print('Logging Info - Callback Added: SWA with constant lr...')
 
-    def init_callbacks(self):
+    def init_callbacks(self, out_folder):
         if 'modelcheckpoint' in self.config.callbacks_to_add:
-            self.add_model_checkpoint()
+            self.add_model_checkpoint(out_folder)
         if 'earlystopping' in self.config.callbacks_to_add:
             self.add_early_stopping()
         if 'swa' in self.config.callbacks_to_add:
@@ -66,9 +66,9 @@ class BaseModel(object):
         # we only save model's weight instead of the whole model
         self.model.load_weights(filename)
 
-    def load_best_model(self):
-        print('Logging Info - Loading model checkpoint: %s.hdf5' % self.config.exp_name)
-        self.load_model(os.path.join(self.config.checkpoint_dir, f'{self.config.exp_name}.hdf5'))
+    def load_best_model(self, out_folder):
+        print('Logging Info - Loading model checkpoint: %s.tf' % self.config.exp_name)
+        self.load_model(os.path.join(self.config.checkpoint_dir, out_folder, f'{self.config.exp_name}.tf'))
         print('Logging Info - Model loaded')
 
     def load_swa_model(self):
